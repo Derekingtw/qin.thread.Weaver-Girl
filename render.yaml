@@ -12,7 +12,8 @@ services:
     plan: free
     region: singapore
     buildCommand: npm install && npx prisma generate && npm run build -w @knit/shared && npm run build -w apps-api
-    startCommand: npx prisma migrate deploy && npm run start:prod -w apps-api
+    startCommand: node -e "const fs=require('fs'); for (const f of ['prisma/migrations/migration_lock.toml','prisma/migrations/20260513000000_init/migration.sql','prisma/migrations/20260513030000_homepage_ads_locale/migration.sql']) { let s=fs.readFileSync(f,'utf8').replace(/^\uFEFF/,''); fs.writeFileSync(f,s); }" && npx prisma migrate deploy && NODE_PATH=apps/api/node_modules:node_modules node apps/api/dist/apps/api/src/main.js
+    healthCheckPath: /web/home
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -41,7 +42,7 @@ services:
   - type: web
     name: qinshixian-admin-web-prod
     runtime: static
-    buildCommand: npm install && npm run build -w @knit/shared && npm run build -w @knit/ui && npm run build -w apps-admin-web
+    buildCommand: npm install && npm install @rollup/rollup-linux-x64-gnu@4.60.3 --no-save && npm run build -w @knit/shared && npm run build -w @knit/ui && npm run build -w apps-admin-web
     staticPublishPath: apps/admin-web/dist
     envVars:
       - key: VITE_API_BASE_URL
