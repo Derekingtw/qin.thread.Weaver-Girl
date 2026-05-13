@@ -1,0 +1,14 @@
+<svg width="318" height="86" viewBox="0 0 318 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(4 5)">
+    <circle cx="38" cy="35" r="27" stroke="#3F766F" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="39 12"/>
+    <path d="M11 59C24 54 39 55 49 60C58 65 67 65 78 61" stroke="#3F766F" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M39 15V58" stroke="#3F766F" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M27 39C32 34 39 34 44 40C49 45 49 53 43 56C36 60 26 54 29 46C31 40 37 40 41 44" stroke="#3F766F" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M39 26C35 32 35 40 39 47C44 40 44 32 39 26Z" fill="#3F766F"/>
+    <path d="M39 10V6" stroke="#C48969" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M17 36H12" stroke="#C48969" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M65 36H60" stroke="#C48969" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <text x="96" y="58" fill="#3F766F" font-size="47" font-family="PingFang TC, Microsoft JhengHei, Noto Sans TC, serif" font-weight="600" letter-spacing="6">秦時線</text>
+  <path d="M284 61L289 68L296 61L289 54L284 61Z" fill="#C48969"/>
+</svg>

@@ -1,0 +1,1172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum UserRole {
+  BUYER
+  KNITTER
+  EMPLOYEE
+}
+
+enum RoleColor {
+  blue
+  purple
+  gray
+}
+
+enum PhoneVerificationPurpose {
+  REGISTER
+  LOGIN
+  BIND_PHONE
+}
+
+enum EmployeeRole {
+  SUPER_ADMIN
+  REVIEWER
+  OPS
+  FINANCE
+  CUSTOMER_SERVICE
+  MARKETING
+}
+
+enum InviteStatus {
+  ACTIVE
+  USED
+  EXPIRED
+  REVOKED
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum KnitterApplicationStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum ListingType {
+  KNITTER_SERVICE
+  PLATFORM_PRODUCT
+}
+
+enum CooperationMode {
+  COMMISSION_5
+  PLATFORM_BUYOUT_SERVICE
+  PLATFORM_OWNED_INVENTORY
+}
+
+enum PublishChannel {
+  H5
+  MINI_PROGRAM
+  APP
+  ADMIN
+}
+
+enum ListingStatus {
+  DRAFT
+  PENDING_REVIEW
+  LIVE
+  REJECTED
+  REMOVED
+  SOLD_OUT
+}
+
+enum ReadyMadeOfferStatus {
+  SUBMITTED
+  APPROVED
+  REJECTED
+  PURCHASED
+}
+
+enum InventoryStatus {
+  IN_STOCK
+  LISTED
+  SOLD
+  ARCHIVED
+}
+
+enum OrderChannel {
+  H5
+  MINI_PROGRAM
+  APP
+  ADMIN
+}
+
+enum OrderStatus {
+  CREATED
+  DEPOSIT_PENDING
+  DEPOSIT_PAID
+  AWAITING_KNITTER_ACCEPTANCE
+  IN_PROGRESS
+  SENT_TO_PLATFORM
+  PLATFORM_INSPECTION
+  BALANCE_PENDING
+  BALANCE_PAID
+  PLATFORM_SHIPPED
+  COMPLETED
+  CANCELLED
+  REFUNDING
+  REFUNDED
+  DISPUTED
+}
+
+enum PaymentType {
+  DEPOSIT
+  BALANCE
+  AD_FEE
+}
+
+enum PaymentProvider {
+  MOCK
+  WECHAT_JSAPI
+  WECHAT_H5
+  WECHAT_NATIVE
+  WECHAT_APP
+  ALIPAY_WAP
+  ALIPAY_NATIVE
+  ALIPAY_APP
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ListingPaymentMode {
+  FULL_PAYMENT
+  DEPOSIT_50
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum MediaAssetType {
+  IMAGE
+  VIDEO
+  FILE
+}
+
+enum MediaUsage {
+  HOME_HERO
+  ANNOUNCEMENT
+  LISTING
+  AD
+  PLATFORM_PRODUCT
+  LOGO
+  OTHER
+}
+
+enum AdPackageStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum AdSlotPlacement {
+  HOME_KNITTER_PROMO
+}
+
+enum AdSlotStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum AdApplicationStatus {
+  DRAFT
+  SUBMITTED
+  REJECTED
+  APPROVED_PENDING_PAYMENT
+  PAYMENT_EXPIRED
+  PAID
+  SCHEDULED
+  LIVE
+  ENDED
+  CANCELLED
+  REFUNDING
+  REFUNDED
+}
+
+enum AdPlacementStatus {
+  SCHEDULED
+  LIVE
+  ENDED
+  CANCELLED
+}
+
+enum AdEventType {
+  IMPRESSION
+  CLICK
+}
+
+enum RefundStatus {
+  REQUESTED
+  APPROVED
+  REJECTED
+  PROCESSING
+  REFUNDED
+}
+
+enum SettlementType {
+  COMMISSION_ORDER
+  BUYOUT_LABOR_FEE
+  READY_MADE_PURCHASE
+}
+
+enum SettlementStatus {
+  PENDING
+  APPROVED
+  PAID
+  CANCELLED
+}
+
+enum SupportTicketType {
+  BUYER_PLATFORM
+  KNITTER_PLATFORM
+}
+
+enum SupportTicketStatus {
+  OPEN
+  PENDING
+  CLOSED
+}
+
+enum SupportMessageVisibility {
+  BUYER_PLATFORM
+  KNITTER_PLATFORM
+  INTERNAL
+}
+
+enum LeadSourceType {
+  WECHAT_GROUP
+  WECHAT_OFFICIAL_ACCOUNT
+  WECHAT_WORK
+  MOMENTS
+  XIAOHONGSHU
+  DOUYIN
+  VIDEO_CHANNEL
+  MANUAL
+  OTHER
+}
+
+enum LeadSourceStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+enum TrackingEventType {
+  PAGE_VIEW
+  REGISTER
+  LOGIN
+  ORDER_CREATED
+  DEPOSIT_PAID
+  BALANCE_PAID
+}
+
+enum WechatAppType {
+  MINI_PROGRAM
+  OFFICIAL_ACCOUNT
+}
+
+enum WechatSubscribeStatus {
+  UNKNOWN
+  SUBSCRIBED
+  UNSUBSCRIBED
+}
+
+enum DevicePlatform {
+  IOS
+  ANDROID
+}
+
+enum CmsStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum BannerStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum ConsentPolicyType {
+  TERMS
+  PRIVACY
+}
+
+model User {
+  id                  String    @id @default(uuid())
+  phone_encrypted     String?   @db.Text
+  phone_hash          String?   @unique
+  public_code         String    @unique
+  role_color          RoleColor
+  status              UserStatus @default(ACTIVE)
+  first_source_id     String?
+  first_campaign_id   String?
+  first_tracking_link_id String?
+  preferred_locale    String?
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
+  deleted_at          DateTime?
+
+  roles               UserRoleRecord[]
+  employee_profile    EmployeeProfile?
+  buyer_profile       BuyerProfile?
+  knitter_profile     KnitterProfile?
+  buyer_orders        Order[] @relation("BuyerOrders")
+  knitter_orders      Order[] @relation("KnitterOrders")
+  listings            Listing[] @relation("ListingsCreatedBy")
+  support_tickets     SupportTicket[] @relation("TicketsCreatedBy")
+  support_messages    SupportMessage[]
+  settlements         Settlement[] @relation("KnitterSettlements")
+  tags                UserTagRelation[]
+  service_assignments ServiceAssignment[] @relation("AssignedUser")
+  web_sessions        WebSession[]
+  consent_logs        ConsentLog[]
+  wechat_bindings     WechatBinding[]
+  devices             UserDevice[]
+  notifications       AppNotification[]
+  audit_logs          AuditLog[]
+  created_invites     EmployeeInvite[] @relation("InviteCreator")
+  used_invites        EmployeeInvite[] @relation("InviteUsedBy")
+  approved_knitters   KnitterProfile[] @relation("KnitterApprovedBy")
+  reviewed_listings   Listing[] @relation("ListingReviewer")
+  reviewed_ready_made_offers ReadyMadeOffer[] @relation("ReadyMadeReviewer")
+  order_status_logs   OrderStatusLog[]
+  refunds_created     Refund[] @relation("RefundCreatedBy")
+  refunds_reviewed    Refund[] @relation("RefundReviewedBy")
+  assigned_tickets    SupportTicket[] @relation("TicketAssignedEmployee")
+  lead_sources_owned  LeadSource[] @relation("LeadSourceOwner")
+  campaigns_created   Campaign[] @relation("CampaignCreator")
+  tracking_links_created TrackingLink[] @relation("TrackingLinkCreator")
+  tracking_events     TrackingEvent[]
+  customer_tags_created CustomerTag[] @relation("CustomerTagCreator")
+  user_tags_created   UserTagRelation[] @relation("UserTagCreator")
+  service_assignments_as_employee ServiceAssignment[] @relation("AssignedEmployee")
+  service_assignments_assigned_by ServiceAssignment[] @relation("AssignedBy")
+  cms_pages_created   CmsPage[] @relation("CmsPageCreator")
+  cms_pages_updated   CmsPage[] @relation("CmsPageUpdater")
+  system_settings_updated SystemSetting[] @relation("SystemSettingUpdater")
+  homepage_settings_updated HomepageSetting[] @relation("HomepageSettingUpdatedBy")
+  announcements_created Announcement[] @relation("AnnouncementCreatedBy")
+  announcements_updated Announcement[] @relation("AnnouncementUpdatedBy")
+  media_assets_created MediaAsset[] @relation("MediaAssetCreatedBy")
+  ad_applications     AdApplication[] @relation("KnitterAdApplications")
+  ad_reviews          AdApplication[] @relation("AdApplicationReviewedBy")
+  ad_placements_created AdPlacement[] @relation("AdPlacementCreatedBy")
+  ad_events           AdEvent[]
+
+  first_source        LeadSource? @relation(fields: [first_source_id], references: [id])
+  first_campaign      Campaign? @relation(fields: [first_campaign_id], references: [id])
+  first_tracking_link TrackingLink? @relation(fields: [first_tracking_link_id], references: [id])
+
+  @@index([first_source_id])
+  @@index([first_campaign_id])
+  @@index([first_tracking_link_id])
+  @@map("users")
+}
+
+model UserRoleRecord {
+  id         String   @id @default(uuid())
+  user_id    String
+  role       UserRole
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, role])
+  @@map("user_roles")
+}
+
+model PhoneVerification {
+  id            String   @id @default(uuid())
+  phone_hash    String
+  code_hash     String
+  purpose       PhoneVerificationPurpose
+  expires_at    DateTime
+  consumed_at   DateTime?
+  attempt_count Int      @default(0)
+  created_at    DateTime @default(now())
+
+  @@index([phone_hash, purpose])
+  @@map("phone_verifications")
+}
+
+model EmployeeInvite {
+  id               String       @id @default(uuid())
+  invite_code_hash String       @unique
+  role             EmployeeRole
+  created_by       String
+  expires_at       DateTime
+  used_by          String?
+  used_at          DateTime?
+  status           InviteStatus @default(ACTIVE)
+  creator          User         @relation("InviteCreator", fields: [created_by], references: [id])
+  used_user        User?        @relation("InviteUsedBy", fields: [used_by], references: [id])
+
+  @@index([created_by])
+  @@index([used_by])
+  @@map("employee_invites")
+}
+
+model EmployeeProfile {
+  id         String         @id @default(uuid())
+  user_id    String         @unique
+  name       String
+  role       EmployeeRole
+  status     EmployeeStatus @default(ACTIVE)
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+  user       User           @relation(fields: [user_id], references: [id])
+
+  @@map("employee_profiles")
+}
+
+model BuyerProfile {
+  id                        String   @id @default(uuid())
+  user_id                   String   @unique
+  nickname                  String?
+  default_address_encrypted String?  @db.Text
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+  user                      User     @relation(fields: [user_id], references: [id])
+
+  @@map("buyer_profiles")
+}
+
+model KnitterProfile {
+  id                       String                   @id @default(uuid())
+  user_id                  String                   @unique
+  display_name             String
+  skills                   Json
+  intro                    String                   @db.Text
+  application_status       KnitterApplicationStatus @default(PENDING_REVIEW)
+  payout_account_encrypted String?                  @db.Text
+  approved_by              String?
+  approved_at              DateTime?
+  reject_reason            String?                  @db.Text
+  created_at               DateTime                 @default(now())
+  updated_at               DateTime                 @updatedAt
+  user                     User                     @relation(fields: [user_id], references: [id])
+  approver                 User?                    @relation("KnitterApprovedBy", fields: [approved_by], references: [id])
+  files                    KnitterApplicationFile[]
+  ready_made_offers        ReadyMadeOffer[]
+
+  @@index([approved_by])
+  @@map("knitter_profiles")
+}
+
+model KnitterApplicationFile {
+  id         String         @id @default(uuid())
+  knitter_id String
+  file_url   String
+  file_type  String
+  created_at DateTime       @default(now())
+  knitter    KnitterProfile @relation(fields: [knitter_id], references: [id])
+
+  @@map("knitter_application_files")
+}
+
+model Listing {
+  id                 String          @id @default(uuid())
+  created_by_user_id String
+  listing_type       ListingType
+  cooperation_mode   CooperationMode
+  title              String
+  description        String          @db.Text
+  price_cents        Int
+  currency           String          @default("CNY")
+  deposit_rate       Decimal         @default(0.5) @db.Decimal(5, 4)
+  delivery_days      Int?
+  labor_fee_cents    Int?
+  stock_quantity     Int             @default(1)
+  payment_mode       ListingPaymentMode @default(DEPOSIT_50)
+  sort_order         Int             @default(0)
+  is_platform_featured Boolean       @default(false)
+  publish_channel    PublishChannel  @default(H5)
+  status             ListingStatus   @default(DRAFT)
+  reviewed_by        String?
+  reviewed_at        DateTime?
+  reject_reason      String?         @db.Text
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+  deleted_at         DateTime?
+  created_by         User            @relation("ListingsCreatedBy", fields: [created_by_user_id], references: [id])
+  reviewer           User?           @relation("ListingReviewer", fields: [reviewed_by], references: [id])
+  images             ListingImage[]
+  orders             Order[]
+  ad_applications    AdApplication[]
+
+  @@index([created_by_user_id])
+  @@index([status])
+  @@map("listings")
+}
+
+model ListingImage {
+  id         String  @id @default(uuid())
+  listing_id String
+  image_url  String
+  sort_order Int     @default(0)
+  listing    Listing @relation(fields: [listing_id], references: [id])
+
+  @@map("listing_images")
+}
+
+model ReadyMadeOffer {
+  id                    String               @id @default(uuid())
+  knitter_id            String
+  title                 String
+  description           String               @db.Text
+  requested_price_cents Int
+  quantity              Int
+  status                ReadyMadeOfferStatus @default(SUBMITTED)
+  reviewed_by           String?
+  reviewed_at           DateTime?
+  reject_reason         String?              @db.Text
+  created_at            DateTime             @default(now())
+  updated_at            DateTime             @updatedAt
+  knitter               KnitterProfile       @relation(fields: [knitter_id], references: [id])
+  reviewer              User?                @relation("ReadyMadeReviewer", fields: [reviewed_by], references: [id])
+  inventory             PlatformInventory[]
+
+  @@map("ready_made_offers")
+}
+
+model PlatformInventory {
+  id                         String          @id @default(uuid())
+  source_ready_made_offer_id String?
+  title                      String
+  description                String          @db.Text
+  quantity                   Int
+  purchase_price_cents       Int
+  status                     InventoryStatus @default(IN_STOCK)
+  created_at                 DateTime        @default(now())
+  updated_at                 DateTime        @updatedAt
+  source_ready_made_offer    ReadyMadeOffer? @relation(fields: [source_ready_made_offer_id], references: [id])
+
+  @@map("platform_inventory")
+}
+
+model Order {
+  id                         String          @id @default(uuid())
+  order_no                   String          @unique
+  buyer_id                   String
+  listing_id                 String
+  knitter_id                 String?
+  cooperation_mode_snapshot  CooperationMode
+  total_price_cents          Int
+  deposit_amount_cents       Int
+  balance_amount_cents       Int
+  currency                   String          @default("CNY")
+  delivery_days_snapshot     Int?
+  accepted_at                DateTime?
+  due_at                     DateTime?
+  buyer_address_encrypted    String?         @db.Text
+  platform_ship_address_snapshot String      @db.Text
+  order_channel              OrderChannel    @default(H5)
+  source_id                  String?
+  campaign_id                String?
+  tracking_link_id           String?
+  status                     OrderStatus     @default(DEPOSIT_PENDING)
+  created_at                 DateTime        @default(now())
+  updated_at                 DateTime        @updatedAt
+  deleted_at                 DateTime?
+  buyer                      User            @relation("BuyerOrders", fields: [buyer_id], references: [id])
+  listing                    Listing         @relation(fields: [listing_id], references: [id])
+  knitter                    User?           @relation("KnitterOrders", fields: [knitter_id], references: [id])
+  source                     LeadSource?     @relation(fields: [source_id], references: [id])
+  campaign                   Campaign?       @relation(fields: [campaign_id], references: [id])
+  tracking_link              TrackingLink?   @relation(fields: [tracking_link_id], references: [id])
+  status_logs                OrderStatusLog[]
+  payments                   Payment[]
+  refunds                    Refund[]
+  settlements                Settlement[]
+  support_tickets            SupportTicket[]
+
+  @@index([buyer_id])
+  @@index([knitter_id])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderStatusLog {
+  id          String       @id @default(uuid())
+  order_id    String
+  from_status OrderStatus?
+  to_status   OrderStatus
+  changed_by  String?
+  note        String?      @db.Text
+  created_at  DateTime     @default(now())
+  order       Order        @relation(fields: [order_id], references: [id])
+  actor       User?        @relation(fields: [changed_by], references: [id])
+
+  @@index([order_id])
+  @@map("order_status_logs")
+}
+
+model Payment {
+  id                      String          @id @default(uuid())
+  order_id                String?
+  ad_application_id       String?
+  payment_type            PaymentType
+  amount_cents            Int
+  currency                String          @default("CNY")
+  provider                PaymentProvider @default(MOCK)
+  provider_transaction_id String?
+  status                  PaymentStatus   @default(PENDING)
+  idempotency_key         String          @unique
+  paid_at                 DateTime?
+  raw_payload             Json?
+  created_at              DateTime        @default(now())
+  updated_at              DateTime        @updatedAt
+  order                   Order?          @relation(fields: [order_id], references: [id])
+  ad_application          AdApplication?  @relation(fields: [ad_application_id], references: [id])
+  refunds                 Refund[]
+
+  @@index([order_id, payment_type])
+  @@index([ad_application_id, payment_type])
+  @@map("payments")
+}
+
+model Refund {
+  id           String       @id @default(uuid())
+  order_id     String
+  payment_id   String?
+  amount_cents Int
+  reason       String       @db.Text
+  status       RefundStatus @default(REQUESTED)
+  created_by   String
+  reviewed_by  String?
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
+  order        Order        @relation(fields: [order_id], references: [id])
+  payment      Payment?     @relation(fields: [payment_id], references: [id])
+  creator      User         @relation("RefundCreatedBy", fields: [created_by], references: [id])
+  reviewer     User?        @relation("RefundReviewedBy", fields: [reviewed_by], references: [id])
+
+  @@map("refunds")
+}
+
+model Settlement {
+  id                      String           @id @default(uuid())
+  order_id                String?
+  knitter_id              String
+  settlement_type         SettlementType
+  gross_amount_cents      Int
+  commission_amount_cents Int              @default(0)
+  payout_amount_cents     Int
+  status                  SettlementStatus @default(PENDING)
+  created_at              DateTime         @default(now())
+  updated_at              DateTime         @updatedAt
+  order                   Order?           @relation(fields: [order_id], references: [id])
+  knitter                 User             @relation("KnitterSettlements", fields: [knitter_id], references: [id])
+
+  @@index([knitter_id])
+  @@map("settlements")
+}
+
+model SupportTicket {
+  id                   String              @id @default(uuid())
+  order_id             String?
+  created_by_user_id   String
+  ticket_type          SupportTicketType
+  status               SupportTicketStatus @default(OPEN)
+  assigned_employee_id String?
+  created_at           DateTime            @default(now())
+  updated_at           DateTime            @updatedAt
+  order                Order?              @relation(fields: [order_id], references: [id])
+  created_by           User                @relation("TicketsCreatedBy", fields: [created_by_user_id], references: [id])
+  assigned_employee    User?               @relation("TicketAssignedEmployee", fields: [assigned_employee_id], references: [id])
+  messages             SupportMessage[]
+
+  @@index([created_by_user_id])
+  @@map("support_tickets")
+}
+
+model SupportMessage {
+  id             String                   @id @default(uuid())
+  ticket_id      String
+  sender_user_id String
+  visibility     SupportMessageVisibility
+  message_text   String                   @db.Text
+  created_at     DateTime                 @default(now())
+  ticket         SupportTicket            @relation(fields: [ticket_id], references: [id])
+  sender         User                     @relation(fields: [sender_user_id], references: [id])
+
+  @@index([ticket_id])
+  @@map("support_messages")
+}
+
+model LeadSource {
+  id                String           @id @default(uuid())
+  name              String
+  source_type       LeadSourceType
+  owner_employee_id String?
+  status            LeadSourceStatus @default(ACTIVE)
+  created_at        DateTime         @default(now())
+  updated_at        DateTime         @updatedAt
+  owner_employee    User?            @relation("LeadSourceOwner", fields: [owner_employee_id], references: [id])
+  users             User[]
+  orders            Order[]
+  tracking_links    TrackingLink[]
+  tracking_events   TrackingEvent[]
+
+  @@map("lead_sources")
+}
+
+model Campaign {
+  id              String         @id @default(uuid())
+  name            String
+  description     String?        @db.Text
+  starts_at       DateTime?
+  ends_at         DateTime?
+  status          CampaignStatus @default(DRAFT)
+  created_by      String
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  creator         User           @relation("CampaignCreator", fields: [created_by], references: [id])
+  users           User[]
+  orders          Order[]
+  tracking_links  TrackingLink[]
+  tracking_events TrackingEvent[]
+
+  @@map("campaigns")
+}
+
+model TrackingLink {
+  id                 String   @id @default(uuid())
+  code               String   @unique
+  name               String
+  target_url         String
+  source_id          String?
+  campaign_id        String?
+  created_by         String
+  click_count        Int      @default(0)
+  register_count     Int      @default(0)
+  order_count        Int      @default(0)
+  deposit_paid_count Int      @default(0)
+  balance_paid_count Int      @default(0)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  source             LeadSource? @relation(fields: [source_id], references: [id])
+  campaign           Campaign?   @relation(fields: [campaign_id], references: [id])
+  creator            User        @relation("TrackingLinkCreator", fields: [created_by], references: [id])
+  users              User[]
+  orders             Order[]
+  events             TrackingEvent[]
+
+  @@map("tracking_links")
+}
+
+model TrackingEvent {
+  id               String            @id @default(uuid())
+  tracking_link_id String?
+  source_id        String?
+  campaign_id      String?
+  user_id          String?
+  event_type       TrackingEventType
+  path             String
+  ip               String?
+  user_agent       String?           @db.Text
+  created_at       DateTime          @default(now())
+  tracking_link    TrackingLink?     @relation(fields: [tracking_link_id], references: [id])
+  source           LeadSource?       @relation(fields: [source_id], references: [id])
+  campaign         Campaign?         @relation(fields: [campaign_id], references: [id])
+  user             User?             @relation(fields: [user_id], references: [id])
+
+  @@index([event_type])
+  @@map("tracking_events")
+}
+
+model CustomerTag {
+  id         String            @id @default(uuid())
+  name       String
+  color      String
+  created_by String
+  created_at DateTime          @default(now())
+  creator    User              @relation("CustomerTagCreator", fields: [created_by], references: [id])
+  users      UserTagRelation[]
+
+  @@map("customer_tags")
+}
+
+model UserTagRelation {
+  id         String      @id @default(uuid())
+  user_id    String
+  tag_id     String
+  created_by String
+  created_at DateTime    @default(now())
+  user       User        @relation(fields: [user_id], references: [id])
+  tag        CustomerTag @relation(fields: [tag_id], references: [id])
+  creator    User        @relation("UserTagCreator", fields: [created_by], references: [id])
+
+  @@unique([user_id, tag_id])
+  @@map("user_tag_relations")
+}
+
+model ServiceAssignment {
+  id          String   @id @default(uuid())
+  user_id     String
+  employee_id String
+  assigned_by String
+  note        String?  @db.Text
+  created_at  DateTime @default(now())
+  user        User     @relation("AssignedUser", fields: [user_id], references: [id])
+  employee    User     @relation("AssignedEmployee", fields: [employee_id], references: [id])
+  assigner    User     @relation("AssignedBy", fields: [assigned_by], references: [id])
+
+  @@map("service_assignments")
+}
+
+model WebSession {
+  id                 String   @id @default(uuid())
+  user_id            String
+  session_token_hash String
+  ip                 String?
+  user_agent         String?  @db.Text
+  expires_at         DateTime
+  created_at         DateTime @default(now())
+  user               User     @relation(fields: [user_id], references: [id])
+
+  @@index([session_token_hash])
+  @@map("web_sessions")
+}
+
+model ConsentLog {
+  id             String            @id @default(uuid())
+  user_id        String?
+  phone_hash     String?
+  policy_type    ConsentPolicyType
+  policy_version String
+  agreed_at      DateTime          @default(now())
+  ip             String?
+  user_agent     String?           @db.Text
+  user           User?             @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@index([phone_hash])
+  @@map("consent_logs")
+}
+
+model WechatBinding {
+  id               String                @id @default(uuid())
+  user_id          String
+  app_type         WechatAppType
+  openid           String
+  unionid          String?
+  nickname         String?
+  avatar_url       String?
+  subscribe_status WechatSubscribeStatus @default(UNKNOWN)
+  created_at       DateTime              @default(now())
+  updated_at       DateTime              @updatedAt
+  user             User                  @relation(fields: [user_id], references: [id])
+
+  @@unique([app_type, openid])
+  @@index([unionid])
+  @@map("wechat_bindings")
+}
+
+model UserDevice {
+  id           String         @id @default(uuid())
+  user_id      String
+  platform     DevicePlatform
+  device_id    String
+  push_token   String?
+  app_version  String?
+  last_seen_at DateTime
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  user         User           @relation(fields: [user_id], references: [id])
+
+  @@unique([platform, device_id])
+  @@map("user_devices")
+}
+
+model AppNotification {
+  id         String   @id @default(uuid())
+  user_id    String
+  title      String
+  body       String   @db.Text
+  type       String
+  data       Json?
+  read_at    DateTime?
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@map("app_notifications")
+}
+
+model AppVersion {
+  id                    String         @id @default(uuid())
+  platform              DevicePlatform
+  version               String
+  min_supported_version String
+  force_update          Boolean        @default(false)
+  release_notes         String         @db.Text
+  created_at            DateTime       @default(now())
+
+  @@map("app_versions")
+}
+
+model CmsPage {
+  id         String    @id @default(uuid())
+  slug       String    @unique
+  title      String
+  content    String    @db.Text
+  status     CmsStatus @default(DRAFT)
+  created_by String
+  updated_by String?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  creator    User      @relation("CmsPageCreator", fields: [created_by], references: [id])
+  updater    User?     @relation("CmsPageUpdater", fields: [updated_by], references: [id])
+
+  @@map("cms_pages")
+}
+
+model CmsBanner {
+  id         String       @id @default(uuid())
+  title      String
+  image_url  String
+  target_url String
+  sort_order Int          @default(0)
+  status     BannerStatus @default(ACTIVE)
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+
+  @@map("cms_banners")
+}
+
+model HomepageSetting {
+  id                         String   @id @default(uuid())
+  hero_badge_zh_hant          String
+  hero_badge_zh_hans          String?
+  hero_slogan_zh_hant         String
+  hero_slogan_zh_hans         String?
+  hero_subtitle_zh_hant       String   @db.Text
+  hero_subtitle_zh_hans       String?  @db.Text
+  primary_cta_text_zh_hant    String
+  primary_cta_text_zh_hans    String?
+  primary_cta_url             String
+  secondary_cta_text_zh_hant  String
+  secondary_cta_text_zh_hans  String?
+  secondary_cta_url           String
+  hero_image_url              String?
+  hero_image_alt_zh_hant      String?
+  hero_image_alt_zh_hans      String?
+  show_hero_stat_card         Boolean  @default(false)
+  hero_stat_label_zh_hant     String?
+  hero_stat_label_zh_hans     String?
+  hero_stat_value             String?
+  hero_stat_extra_zh_hant     String?
+  hero_stat_extra_zh_hans     String?
+  trust_point_1_zh_hant       String?
+  trust_point_1_zh_hans       String?
+  trust_point_2_zh_hant       String?
+  trust_point_2_zh_hans       String?
+  trust_point_3_zh_hant       String?
+  trust_point_3_zh_hans       String?
+  updated_by                  String?
+  created_at                  DateTime @default(now())
+  updated_at                  DateTime @updatedAt
+  updater                     User?    @relation("HomepageSettingUpdatedBy", fields: [updated_by], references: [id])
+
+  @@map("homepage_settings")
+}
+
+model Announcement {
+  id              String             @id @default(uuid())
+  title_zh_hant   String
+  title_zh_hans   String?
+  summary_zh_hant String?            @db.Text
+  summary_zh_hans String?            @db.Text
+  content_zh_hant String?            @db.Text
+  content_zh_hans String?            @db.Text
+  image_url       String?
+  link_url        String?
+  starts_at       DateTime?
+  ends_at         DateTime?
+  pinned          Boolean            @default(false)
+  sort_order      Int                @default(0)
+  status          AnnouncementStatus @default(DRAFT)
+  created_by      String
+  updated_by      String?
+  created_at      DateTime           @default(now())
+  updated_at      DateTime           @updatedAt
+  deleted_at      DateTime?
+  creator         User               @relation("AnnouncementCreatedBy", fields: [created_by], references: [id])
+  updater         User?              @relation("AnnouncementUpdatedBy", fields: [updated_by], references: [id])
+
+  @@index([status, pinned, sort_order])
+  @@map("announcements")
+}
+
+model MediaAsset {
+  id            String         @id @default(uuid())
+  url           String
+  asset_type    MediaAssetType
+  original_name String?
+  mime_type     String?
+  size_bytes    Int?
+  usage         MediaUsage     @default(OTHER)
+  created_by    String?
+  created_at    DateTime       @default(now())
+  creator       User?          @relation("MediaAssetCreatedBy", fields: [created_by], references: [id])
+
+  @@map("media_assets")
+}
+
+model AdPackage {
+  id                  String          @id @default(uuid())
+  name_zh_hant         String
+  name_zh_hans         String?
+  description_zh_hant  String?         @db.Text
+  description_zh_hans  String?         @db.Text
+  duration_days        Int
+  price_cents          Int
+  currency             String          @default("CNY")
+  status               AdPackageStatus @default(ACTIVE)
+  sort_order           Int             @default(0)
+  created_at           DateTime        @default(now())
+  updated_at           DateTime        @updatedAt
+  applications         AdApplication[]
+
+  @@map("ad_packages")
+}
+
+model AdSlot {
+  id            String          @id @default(uuid())
+  code          String          @unique
+  name_zh_hant  String
+  name_zh_hans  String?
+  placement     AdSlotPlacement @default(HOME_KNITTER_PROMO)
+  slot_index    Int
+  status        AdSlotStatus    @default(ACTIVE)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  placements    AdPlacement[]
+
+  @@unique([placement, slot_index])
+  @@map("ad_slots")
+}
+
+model AdApplication {
+  id                    String              @id @default(uuid())
+  knitter_id             String
+  listing_id             String
+  package_id             String
+  ad_title_zh_hant       String
+  ad_title_zh_hans       String?
+  ad_subtitle_zh_hant    String?
+  ad_subtitle_zh_hans    String?
+  ad_image_url           String?
+  requested_start_at     DateTime?
+  preferred_slot_index   Int?
+  status                 AdApplicationStatus @default(DRAFT)
+  review_note            String?             @db.Text
+  reject_reason          String?             @db.Text
+  reviewed_by            String?
+  reviewed_at            DateTime?
+  payment_deadline_at    DateTime?
+  paid_at                DateTime?
+  created_at             DateTime            @default(now())
+  updated_at             DateTime            @updatedAt
+  deleted_at             DateTime?
+  knitter                User                @relation("KnitterAdApplications", fields: [knitter_id], references: [id])
+  listing                Listing             @relation(fields: [listing_id], references: [id])
+  package                AdPackage           @relation(fields: [package_id], references: [id])
+  reviewer               User?               @relation("AdApplicationReviewedBy", fields: [reviewed_by], references: [id])
+  payments               Payment[]
+  placements             AdPlacement[]
+
+  @@index([knitter_id, status])
+  @@index([listing_id])
+  @@map("ad_applications")
+}
+
+model AdPlacement {
+  id                String            @id @default(uuid())
+  ad_application_id String
+  ad_slot_id        String
+  starts_at         DateTime
+  ends_at           DateTime
+  priority          Int               @default(0)
+  status            AdPlacementStatus @default(SCHEDULED)
+  created_by        String
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  application       AdApplication     @relation(fields: [ad_application_id], references: [id])
+  slot              AdSlot            @relation(fields: [ad_slot_id], references: [id])
+  creator           User              @relation("AdPlacementCreatedBy", fields: [created_by], references: [id])
+  events            AdEvent[]
+
+  @@index([ad_slot_id, starts_at, ends_at])
+  @@map("ad_placements")
+}
+
+model AdEvent {
+  id              String      @id @default(uuid())
+  ad_placement_id String
+  event_type      AdEventType
+  user_id         String?
+  ip              String?
+  user_agent      String?     @db.Text
+  created_at      DateTime    @default(now())
+  placement       AdPlacement @relation(fields: [ad_placement_id], references: [id])
+  user            User?       @relation(fields: [user_id], references: [id])
+
+  @@index([ad_placement_id, event_type])
+  @@map("ad_events")
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  actor_user_id String?
+  action        String
+  entity_type   String
+  entity_id     String
+  before        Json?
+  after         Json?
+  ip            String?
+  created_at    DateTime @default(now())
+  actor         User?    @relation(fields: [actor_user_id], references: [id])
+
+  @@index([actor_user_id])
+  @@index([entity_type, entity_id])
+  @@map("audit_logs")
+}
+
+model SystemSetting {
+  id         String   @id @default(uuid())
+  key        String   @unique
+  value      Json
+  updated_by String?
+  updated_at DateTime @updatedAt
+  updater    User?    @relation("SystemSettingUpdater", fields: [updated_by], references: [id])
+
+  @@map("system_settings")
+}
