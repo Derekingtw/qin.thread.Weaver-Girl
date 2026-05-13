@@ -1,1 +1,1 @@
-﻿-- No-op: merged into PostgreSQL baseline for Qinshixian Render deployment.
+-- No-op: merged into PostgreSQL baseline for Qinshixian Render deployment.
