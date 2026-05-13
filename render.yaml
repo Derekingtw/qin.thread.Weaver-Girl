@@ -1,7 +1,7 @@
 services:
   - type: keyvalue
     name: qinshixian-keyvalue-prod
-    plan: starter
+    plan: free
     region: singapore
     maxmemoryPolicy: allkeys-lru
     ipAllowList: []
@@ -9,7 +9,7 @@ services:
   - type: web
     name: qinshixian-api-prod
     runtime: node
-    plan: starter
+    plan: free
     region: singapore
     buildCommand: npm ci && npx prisma generate && npm run build -w @knit/shared && npm run build -w apps-api
     startCommand: npx prisma migrate deploy && npm run start:prod -w apps-api
@@ -28,7 +28,7 @@ services:
   - type: web
     name: qinshixian-web-prod
     runtime: node
-    plan: starter
+    plan: free
     region: singapore
     buildCommand: npm ci && npm run build -w @knit/shared && npm run build -w @knit/ui && npm run build -w apps-web
     startCommand: npm run start -w apps-web
@@ -49,7 +49,7 @@ services:
 
 databases:
   - name: qinshixian-postgres-prod
-    plan: starter
+    plan: free
     region: singapore
     databaseName: qinshixian
     user: qinshixian
