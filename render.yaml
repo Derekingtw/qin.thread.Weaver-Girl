@@ -32,7 +32,8 @@ services:
     plan: free
     region: singapore
     buildCommand: npm install && npm run build -w @knit/shared && npm run build -w @knit/ui && npm run build -w apps-web
-    startCommand: npm run start -w apps-web
+    startCommand: cd apps/web && npx next start -p $PORT
+    healthCheckPath: /
     envVars:
       - key: NEXT_PUBLIC_API_BASE_URL
         value: https://qinshixian-api-prod.onrender.com
