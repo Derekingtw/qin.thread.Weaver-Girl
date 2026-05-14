@@ -85,6 +85,15 @@ Render deployment is defined in `render.yaml` and uses only Qinshixian names:
 
 Do not reuse OA services, OA `DATABASE_URL`, OA Redis/Key Value, OA env groups, OA domains, or OA `render.yaml`.
 
+Production deployment checklist:
+
+- `qinshixian-web-prod` is not a Free Web Service. Use `starter` or higher unless the web app is converted to a Render Static Site.
+- `qinshixian-api-prod` is not a Free Web Service. Use `starter` or higher.
+- `qinshixian-postgres-prod` is a paid Qinshixian Postgres database, not a free/trial database and not OA Postgres.
+- `qinshixian-keyvalue-prod` is a paid Qinshixian Key Value instance or another production Redis/Valkey provider, not OA Key Value.
+- API health check path is `/health`; web health check path is `/`.
+- Users should not see Render `APPLICATION LOADING` / `SERVICE WAKING UP`; if they do, re-check that web and API are not on Free plans.
+
 See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
 
 ## Current Frontend Pages

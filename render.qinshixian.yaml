@@ -1,7 +1,7 @@
 services:
   - type: keyvalue
     name: qinshixian-keyvalue-prod
-    plan: free
+    plan: starter
     region: singapore
     maxmemoryPolicy: allkeys-lru
     ipAllowList: []
@@ -9,7 +9,7 @@ services:
   - type: web
     name: qinshixian-api-prod
     runtime: node
-    plan: free
+    plan: starter
     region: singapore
     buildCommand: npm install && npx prisma generate && npm run build -w @knit/shared && npm run build -w apps-api
     startCommand: node -e "const fs=require('fs'); for (const f of ['prisma/migrations/migration_lock.toml','prisma/migrations/20260513000000_init/migration.sql','prisma/migrations/20260513030000_homepage_ads_locale/migration.sql']) { let s=fs.readFileSync(f,'utf8').replace(/^\uFEFF/,''); fs.writeFileSync(f,s); }" && npx prisma migrate deploy && NODE_PATH=apps/api/node_modules:node_modules node apps/api/dist/apps/api/src/main.js
@@ -29,7 +29,7 @@ services:
   - type: web
     name: qinshixian-web-prod
     runtime: node
-    plan: free
+    plan: starter
     region: singapore
     buildCommand: npm install && npm run build -w @knit/shared && npm run build -w @knit/ui && npm run build -w apps-web
     startCommand: cd apps/web && npx next start -p $PORT
@@ -51,7 +51,7 @@ services:
 
 databases:
   - name: qinshixian-postgres-prod
-    plan: free
+    plan: starter
     region: singapore
     databaseName: qinshixian
     user: qinshixian

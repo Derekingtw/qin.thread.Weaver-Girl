@@ -67,8 +67,19 @@ describe("admin operations wiring", () => {
     expect(render).toContain("VITE_API_BASE_URL");
     expect(render).toContain("CORS_ORIGINS");
     expect(render).not.toContain("oa-");
+    expect(render).not.toContain("plan: free");
     expect(env).toContain("OBJECT_STORAGE_PROVIDER");
     expect(env).toContain("R2_PUBLIC_BASE_URL");
     expect(env).toContain("OSS_ACCESS_KEY_SECRET");
+  });
+
+  it("Render deployment docs explain paid services to avoid waking pages", () => {
+    const docs = read("docs/DEPLOY_RENDER.md");
+    const readme = read("README.md");
+    expect(docs).toContain("APPLICATION LOADING");
+    expect(docs).toContain("Free Web Services spin down");
+    expect(docs).toContain("must be a paid Web Service");
+    expect(readme).toContain("SERVICE WAKING UP");
+    expect(readme).toContain("not a Free Web Service");
   });
 });

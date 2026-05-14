@@ -26,12 +26,34 @@ This repo currently uses `render.yaml` because no OA blueprint exists in this re
 ## Architecture
 
 - `apps/api`: NestJS REST API, Render Web Service.
-- `apps/web`: buyer and knitter H5 / PC site, Render Web Service.
+- `apps/web`: buyer and knitter H5 / PC site, Render Web Service because it reads `/web/home` with Next.js runtime data fetching. If the web app is later converted to a pure static export, it may move to Render Static Site.
 - `apps/admin-web`: company admin console, Render Static Site.
 - Database: Render Postgres, Prisma `provider = "postgresql"`.
 - Key Value: Render Key Value via `REDIS_URL`.
 
 Redis / Key Value is only for OTP, rate limit, sessions, and short-term cache. Users, orders, payments, settlements, and other core records stay in Postgres.
+
+## Production Plans And Waking Page
+
+Render Free Web Services spin down after idle periods. When the next visitor opens the site, Render may show an `APPLICATION LOADING` / `SERVICE WAKING UP` page while the service starts. Qinshixian is an operating storefront and admin system, so production users must not be routed to Free Web Services.
+
+Production requirements:
+
+- `qinshixian-web-prod` must be a paid Web Service, such as `starter` or higher, unless `apps/web` is intentionally converted to a pure Render Static Site.
+- `qinshixian-api-prod` must be a paid Web Service, such as `starter` or higher.
+- `qinshixian-postgres-prod` must be a paid Render Postgres plan. Do not use legacy starter Postgres or a trial/free database for production.
+- `qinshixian-keyvalue-prod` must be a paid Render Key Value plan or another production-ready Redis/Valkey provider.
+- Keep health checks enabled: web `/`, API `/health`.
+
+How to avoid the waking page:
+
+1. In Render, open `qinshixian-web-prod` and confirm Instance Type / Plan is not `Free`.
+2. Open `qinshixian-api-prod` and confirm Instance Type / Plan is not `Free`.
+3. Confirm the API health check path is `/health`.
+4. Confirm Postgres and Key Value are paid Qinshixian resources, not OA resources.
+5. After changing plans, redeploy and verify `https://qinshixian-web-prod.onrender.com/` and `https://qinshixian-api-prod.onrender.com/health`.
+
+This repository's `render.qinshixian.yaml` sets web, API, Postgres, and Key Value to `starter` as the minimum production baseline. If Render's UI offers newer paid names, choose the nearest non-free production instance type and update this file in the same commit.
 
 ## Environment
 
