@@ -82,3 +82,9 @@ See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
 Frontend language options: `繁 / 简 / EN`.
 
 Frontend style options: Fashion, Cozy, Chinese. Cozy is the default. The theme switcher is saved in localStorage and authenticated users can save it through `POST /user/preferred-style`.
+
+## Brand Assets
+
+- Official logo source: `docs/references/qinshixian-logo-official.png`
+- Web logo asset: `apps/web/public/brand/qinshixian-logo-official-cropped.png`
+- Theme references: `docs/references/fashion-theme-reference.png`, `docs/references/cozy-theme-reference.png`, `docs/references/chinese-theme-reference.png`

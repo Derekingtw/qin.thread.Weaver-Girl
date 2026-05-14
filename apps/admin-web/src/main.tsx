@@ -119,9 +119,6 @@ function HomepageSettings() {
             <Form.Item label="預設風格" name="default_style"><Select options={["fashion", "cozy", "chinese"].map((value) => ({ value }))} /></Form.Item>
             <Form.Item label="允許使用者切換風格" name="allow_style_switch" valuePropName="checked"><Switch /></Form.Item>
             <Form.Item label="啟用風格列表" name="enabled_styles"><Select mode="multiple" options={["fashion", "cozy", "chinese"].map((value) => ({ value }))} /></Form.Item>
-            <Form.Item label="信任點 1" name="trust_point_1_zh_hant"><Input /></Form.Item>
-            <Form.Item label="信任點 2" name="trust_point_2_zh_hant"><Input /></Form.Item>
-            <Form.Item label="信任點 3" name="trust_point_3_zh_hant"><Input /></Form.Item>
           </div>
           <Button type="primary" htmlType="submit">儲存首頁設定</Button>
         </Form>
@@ -142,35 +139,31 @@ function HomepageSettings() {
 
 function CmsPages() {
   return (
-    <div className="stack">
-      <Card title="頁面內容管理">
-        <Form layout="vertical" className="wide-form">
-          <Form.Item label="頁面"><Select defaultValue="about" options={[
-            { value: "about", label: "關於我們" },
-            { value: "guarantee", label: "秦時線保障" },
-            { value: "terms", label: "使用者協議" },
-            { value: "privacy", label: "隱私權政策" }
-          ]} /></Form.Item>
-          <div className="form-grid">
-            <Form.Item label="標題（繁）"><Input defaultValue="關於秦時線" /></Form.Item>
-            <Form.Item label="標題（简）"><Input defaultValue="关于秦时线" /></Form.Item>
-            <Form.Item label="Title (EN)"><Input defaultValue="About Qin Thread" /></Form.Item>
-            <Form.Item label="狀態"><Select defaultValue="PUBLISHED" options={["DRAFT", "PUBLISHED", "ARCHIVED"].map((value) => ({ value }))} /></Form.Item>
-            <Form.Item label="內容（繁）"><Input.TextArea rows={5} defaultValue="秦時線相信，手作不只是商品，而是一段時間、一份心意與一雙手的溫度。" /></Form.Item>
-            <Form.Item label="Content (EN)"><Input.TextArea rows={5} defaultValue="Qin Thread believes handmade work carries time, care, and trust." /></Form.Item>
-          </div>
-          <Button type="primary">儲存頁面內容</Button>
-        </Form>
-      </Card>
-    </div>
+    <Card title="頁面內容管理">
+      <Form layout="vertical" className="wide-form">
+        <Form.Item label="頁面"><Select defaultValue="about" options={[
+          { value: "about", label: "關於我們" },
+          { value: "guarantee", label: "秦時線保障" },
+          { value: "terms", label: "使用者協議" },
+          { value: "privacy", label: "隱私權政策" }
+        ]} /></Form.Item>
+        <div className="form-grid">
+          <Form.Item label="標題（繁）"><Input defaultValue="關於秦時線" /></Form.Item>
+          <Form.Item label="Title (EN)"><Input defaultValue="About Qin Thread" /></Form.Item>
+          <Form.Item label="內容（繁）"><Input.TextArea rows={5} defaultValue="秦時線相信，手作不只是商品，而是一段時間、一份心意與一雙手的溫度。" /></Form.Item>
+          <Form.Item label="Content (EN)"><Input.TextArea rows={5} defaultValue="Qin Thread believes handmade work carries time, care, and trust." /></Form.Item>
+        </div>
+        <Button type="primary">儲存頁面內容</Button>
+      </Form>
+    </Card>
   );
 }
 
 function StyleManagement() {
   const cards = [
-    ["fashion", "時尚風", "高級、克制、精品雜誌感，適合高端選品與禮盒系列。"],
-    ["cozy", "溫馨風", "柔和、親切、手作溫度，是秦時線預設品牌風格。"],
-    ["chinese", "中國風", "雅致、國風、書卷感，適合節氣活動與秦時線文化系列。"]
+    ["fashion", "時尚風", "高級、克制、精品雜誌感，適合高端選品與禮盒系列。", "/brand/fashion-theme-reference.png"],
+    ["cozy", "溫馨風", "柔和、親切、手作溫度，是秦時線預設品牌風格。", "/brand/cozy-theme-reference.png"],
+    ["chinese", "中國風", "雅致、國風、書卷感，適合節氣活動與秦時線文化系列。", "/brand/chinese-theme-reference.png"]
   ];
   return (
     <div className="stack">
@@ -185,8 +178,9 @@ function StyleManagement() {
         </Form>
       </Card>
       <div className="theme-preview-grid">
-        {cards.map(([value, title, body]) => (
+        {cards.map(([value, title, body, image]) => (
           <Card className={`theme-preview ${value}`} key={value} title={title}>
+            <img src={image} alt={`${title}參考圖`} />
             <p>{body}</p>
             <Button>預覽</Button>
           </Card>
@@ -194,49 +188,6 @@ function StyleManagement() {
       </div>
     </div>
   );
-}
-
-function Announcements() {
-  return <CrudTable title="活動公告" rows={[
-    { key: 1, title: "春季毛線委託活動", status: "PUBLISHED", pinned: "置頂", order: 1 },
-    { key: 2, title: "新織女入駐招募", status: "PUBLISHED", pinned: "否", order: 2 }
-  ]} />;
-}
-
-function PlatformProducts() {
-  return <CrudTable title="秦時線自營選品" rows={[
-    { key: 1, title: "秦時線・柔霧羊毛線組", status: "LIVE", pinned: "FULL_PAYMENT", order: 42 },
-    { key: 2, title: "手作禮盒・暖心系列", status: "LIVE", pinned: "DEPOSIT_50", order: 12 }
-  ]} />;
-}
-
-function Ads() {
-  return <div className="stack">
-    <Card title="推廣方案管理">
-      <Table pagination={false} dataSource={[
-        { key: 1, name: "暖線曝光 7 天 99 元", days: 7, price: "¥99" },
-        { key: 2, name: "人氣加溫 14 天 168 元", days: 14, price: "¥168" },
-        { key: 3, name: "主推精選 30 天 299 元", days: 30, price: "¥299" }
-      ]} columns={[{ title: "方案", dataIndex: "name" }, { title: "天數", dataIndex: "days" }, { title: "價格", dataIndex: "price" }]} />
-    </Card>
-    <CrudTable title="廣告申請列表" rows={[
-      { key: 1, title: "柔霧圍巾訂製", status: "LIVE", pinned: "slot 1", order: "PAID" },
-      { key: 2, title: "節氣手作推薦", status: "APPROVED_PENDING_PAYMENT", pinned: "slot 2", order: "PENDING" }
-    ]} />
-  </div>;
-}
-
-function Media() {
-  return <Card title="媒體素材">
-    <Space direction="vertical" style={{ width: "100%" }}>
-      <Form layout="inline">
-        <Form.Item label="圖片 URL"><Input defaultValue="/brand/hero-qinshixian-yarn.png" /></Form.Item>
-        <Form.Item label="Usage"><Select defaultValue="HOME_HERO" options={["HOME_HERO", "ANNOUNCEMENT", "LISTING", "AD", "PLATFORM_PRODUCT", "LOGO", "OTHER"].map((value) => ({ value }))} /></Form.Item>
-        <Button type="primary">mock upload / 儲存 URL</Button>
-      </Form>
-      <Table pagination={false} dataSource={[{ key: 1, url: "/brand/hero-qinshixian-yarn.png", usage: "HOME_HERO" }]} columns={[{ title: "URL", dataIndex: "url" }, { title: "用途", dataIndex: "usage" }]} />
-    </Space>
-  </Card>;
 }
 
 function CrudTable({ title, rows }: { title: string; rows: Array<Record<string, unknown>> }) {
@@ -260,10 +211,10 @@ function Root() {
     selected === "homepage" ? <HomepageSettings /> :
     selected === "cms" ? <CmsPages /> :
     selected === "style" ? <StyleManagement /> :
-    selected === "announcements" ? <Announcements /> :
-    selected === "platform-products" ? <PlatformProducts /> :
-    selected === "ads" ? <Ads /> :
-    selected === "media" ? <Media /> :
+    selected === "announcements" ? <CrudTable title="活動公告" rows={[{ key: 1, title: "春季毛線委託活動", status: "PUBLISHED", pinned: "置頂", order: 1 }]} /> :
+    selected === "platform-products" ? <CrudTable title="秦時線自營選品" rows={[{ key: 1, title: "秦時線・柔霧羊毛線組", status: "LIVE", pinned: "FULL_PAYMENT", order: 42 }]} /> :
+    selected === "ads" ? <CrudTable title="織女廣告管理" rows={[{ key: 1, title: "柔霧圍巾訂製", status: "LIVE", pinned: "slot 1", order: "PAID" }]} /> :
+    selected === "media" ? <CrudTable title="媒體素材" rows={[{ key: 1, title: "/brand/qinshixian-logo-official-cropped.png", status: "ACTIVE", pinned: "LOGO", order: 1 }]} /> :
     selected === "knitters" ? <CrudTable title="織女審核" rows={[{ key: 1, title: "待審核織女", status: "PENDING_REVIEW", pinned: "圍巾/披肩", order: "-" }]} /> :
     selected === "audit" ? <CrudTable title="Audit Logs" rows={[{ key: 1, title: "UPDATE_HOMEPAGE_SETTINGS", status: "OK", pinned: "homepage_settings", order: "latest" }]} /> :
     <CrudTable title={title} rows={[{ key: 1, title: "MVP 資料", status: "ACTIVE", pinned: "秦時線", order: 1 }]} />;
@@ -273,7 +224,7 @@ function Root() {
       <App>
         <Layout className="admin-shell">
           <Sider width={252} theme="light" className="sider">
-            <div className="admin-brand"><img src="/brand/qinshixian-logo.svg" alt="秦時線" /></div>
+            <div className="admin-brand"><img src="/brand/qinshixian-logo-official-cropped.png" alt="秦時線" /></div>
             <Menu mode="inline" selectedKeys={[selected]} items={menuItems} onClick={(event) => setSelected(event.key)} />
           </Sider>
           <Layout>

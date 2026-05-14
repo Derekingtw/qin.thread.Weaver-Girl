@@ -12,6 +12,8 @@
 
 Preview card：深墨綠、金棕、大留白、精品卡片、精緻按鈕。
 
+參考圖：`docs/references/fashion-theme-reference.png`
+
 ## 溫馨風 Cozy
 
 這是預設風格。方向：米白、暖棕、柔和綠、圓角卡片、手作溫度、柔和陰影。
@@ -22,6 +24,8 @@ Preview card：深墨綠、金棕、大留白、精品卡片、精緻按鈕。
 
 Preview card：米白、柔和綠、暖銅、圓角卡片、柔和陰影。
 
+參考圖：`docs/references/cozy-theme-reference.png`
+
 ## 中國風 Chinese
 
 方向：國風、雅致、宣紙感、墨綠、暗紅、金銅、細線邊框。避免大紅大金與廉價節慶感。
@@ -31,6 +35,14 @@ Preview card：米白、柔和綠、暖銅、圓角卡片、柔和陰影。
 使用情境：秦時線品牌故事、國風毛線系列、節氣活動、中式手作專題。
 
 Preview card：宣紙底、墨綠、暗紅、金銅、中式細線。
+
+參考圖：`docs/references/chinese-theme-reference.png`
+
+## 正式 Logo
+
+正式 LOGO 原始檔保存於 `docs/references/qinshixian-logo-official.png`。
+
+網站 Header 使用裁切透明版：`apps/web/public/brand/qinshixian-logo-official-cropped.png`。
 
 ## 禁止事項
 
