@@ -68,6 +68,9 @@ describe("admin operations wiring", () => {
     expect(render).toContain("CORS_ORIGINS");
     expect(render).not.toContain("oa-");
     expect(render).not.toContain("plan: free");
+    expect(render).not.toContain("node -e");
+    expect(render).not.toContain("FEFF");
+    expect(render).toContain("npx prisma migrate deploy && NODE_PATH=apps/api/node_modules:node_modules node apps/api/dist/apps/api/src/main.js");
     expect(env).toContain("OBJECT_STORAGE_PROVIDER");
     expect(env).toContain("R2_PUBLIC_BASE_URL");
     expect(env).toContain("OSS_ACCESS_KEY_SECRET");
