@@ -33,6 +33,15 @@ describe("admin operations wiring", () => {
     expect(auth).toContain("public_code: SEED_EMPLOYEE_PUBLIC_CODES[phone]");
   });
 
+  it("auth DTOs keep request bodies under the global whitelist validation pipe", () => {
+    const main = read("apps/api/src/main.ts");
+    const dto = read("apps/api/src/modules/dto.ts");
+    expect(main).toContain("whitelist: true");
+    expect(dto).toContain("class-validator");
+    expect(dto).toContain("@IsString()");
+    expect(dto).toContain("@IsBoolean()");
+  });
+
   it("homepage settings and media upload endpoints are implemented", () => {
     const controller = read("apps/api/src/modules/app.controller.ts");
     expect(controller).toContain('@Get("admin/homepage-settings")');
