@@ -1,53 +1,121 @@
-# 秦時線網站風格切換
+# 秦時線風格系統
 
-秦時線前台支援三種視覺風格：時尚風、溫馨風、中國風。切換只改 CSS variables 與 theme class，不改內容、不換 Logo、不重新載入整站。
+秦時線前台支援三種視覺風格：時尚風、溫馨風、中國風。切換透過 ThemeProvider、CSS theme class 與 shared theme tokens 完成，不重新載入整站，不更換內容，也不更換正式 Logo。
+
+實作位置：
+
+- `apps/web/lib/i18n.tsx`: ThemeProvider 與 localStorage 保存
+- `apps/web/components/ThemeToggle.tsx`: 前台切換器
+- `apps/web/styles/theme.css`: 三風格視覺套用
+- `packages/shared/src/themes/`: shared theme token 定義
+
+## 正式 Logo 規範
+
+正式 Logo 由使用者在 Codex 對話提供，直接保存並使用：
+
+- `apps/web/public/brand/qinshixian-logo-main.png`
+- `apps/web/public/brand/qinshixian-logo-main-light.png`
+- `apps/web/public/brand/qinshixian-logo-main-dark.png`
+- `apps/admin-web/public/brand/qinshixian-logo-main.png`
+- `docs/references/qinshixian-logo-main.png`
+
+禁止事項：
+
+- 不得重畫 Logo。
+- 不得仿製 Logo。
+- 不得用文字替代 Logo。
+- 不得改字形、圖案或比例。
+- 不得使用外部 URL 載入正式 Logo。
+
+允許事項：
+
+- 尺寸適配。
+- 留白裁切與透明背景適配。
+- light/dark 背景版本適配。
 
 ## 時尚風 Fashion
 
-方向：高級、克制、留白、精品選品店與雜誌感。可參考精品品牌的克制與高級感，但不得使用任何商標、logo、版面複製或品牌元素。
-
-色彩 token：background `#F8F5EF`、surface `#FFFFFF`、primary `#1F3D38`、accent `#B68A5B`、textPrimary `#1E2324`、textSecondary `#6C6A66`、border `#DED6C8`。
-
-使用情境：精品毛線、高端成衣、禮盒、秦時線高級系列。
-
-Preview card：深墨綠、金棕、大留白、精品卡片、精緻按鈕。
-
 參考圖：`docs/references/fashion-theme-reference.png`
+
+定位：精品感、雜誌感、高級選品店、克制、大留白、高對比、白色背景。
+
+色彩 token：
+
+- background: `#FFFFFF`
+- surface: `#FFFFFF`
+- primary: `#0F1E1B`
+- accent: `#B68A5B`
+- textPrimary: `#111111`
+- textSecondary: `#666666`
+- border: `#E8E2D7`
+
+視覺差異：
+
+- Header 更像精品官網，線條細、陰影低。
+- Hero 留白更大，標題更接近雜誌版式。
+- CTA 更克制，使用細邊框與深色主按鈕。
+- 卡片陰影降低，邊框更細。
+- section spacing 更寬，資訊更精簡。
+
+適合：精品毛線、高端成衣、禮盒、秦時線高級系列。
 
 ## 溫馨風 Cozy
 
-這是預設風格。方向：米白、暖棕、柔和綠、圓角卡片、手作溫度、柔和陰影。
-
-色彩 token：background `#FAF7F2`、surface `#FFFFFF`、surfaceSoft `#FFF9F3`、primary `#3F766F`、primarySoft `#DDEBE7`、accent `#C48969`、accentSoft `#F3D8C8`、textPrimary `#2F3437`、textSecondary `#6F777C`、border `#E9E2D8`。
-
-使用情境：手作委託、織女入駐、作品展示、品牌溫度。
-
-Preview card：米白、柔和綠、暖銅、圓角卡片、柔和陰影。
-
 參考圖：`docs/references/cozy-theme-reference.png`
+
+定位：手作溫度、柔和、家居感、米白暖色、手工生活感。這是秦時線預設主風格。
+
+色彩 token：
+
+- background: `#FAF7F2`
+- surface: `#FFFFFF`
+- surfaceSoft: `#FFF9F3`
+- primary: `#3F766F`
+- accent: `#C48969`
+- textPrimary: `#2F3437`
+- textSecondary: `#6F777C`
+- border: `#E9E2D8`
+
+視覺差異：
+
+- Header 柔和、親切。
+- Hero 圖與文字節奏更溫暖。
+- 卡片圓角與陰影更柔和。
+- icon 使用柔和綠與暖銅。
+- mobile 卡片滑動保留舒適留白。
+
+適合：手作委託、織女入駐、作品展示、品牌溫度。
 
 ## 中國風 Chinese
 
-方向：國風、雅致、宣紙感、墨綠、暗紅、金銅、細線邊框。避免大紅大金與廉價節慶感。
-
-色彩 token：background `#F7F1E6`、surface `#FFFDF8`、primary `#315B4F`、accent `#9B3A32`、gold `#B58A4A`、ink `#24302C`、muted `#7B6F61`、border `#DED2BD`。
-
-使用情境：秦時線品牌故事、國風毛線系列、節氣活動、中式手作專題。
-
-Preview card：宣紙底、墨綠、暗紅、金銅、中式細線。
-
 參考圖：`docs/references/chinese-theme-reference.png`
 
-## 正式 Logo
+定位：國風、雅致、書卷感、宣紙感、中式精品感。
 
-正式 LOGO 原始檔保存於 `docs/references/qinshixian-logo-official.png`。
+色彩 token：
 
-網站 Header 使用裁切透明版：`apps/web/public/brand/qinshixian-logo-official-cropped.png`。
+- background: `#F7F1E6`
+- surface: `#FFFDF8`
+- primary: `#315B4F`
+- accent: `#9B3A32`
+- gold: `#B58A4A`
+- ink: `#24302C`
+- border: `#DED2BD`
 
-## 禁止事項
+視覺差異：
 
-- 不得改動秦時線 Logo。
-- 不得讓風格切換影響資料或路由。
-- 不得使用外部圖片 URL 當核心背景。
-- 不得複製精品品牌的 logo、商標、招牌圖形或版面。
-- 中國風不得做成俗氣大紅大金。
+- 背景使用淡宣紙肌理。
+- 卡片使用細線、低圓角與書卷感邊界。
+- 小標籤與 icon 有印章感。
+- CTA 加入暗紅與金銅對比。
+- Footer 與流程條更像中式品牌服務頁。
+
+適合：品牌故事、節氣活動、國風毛線系列、中式手作專題。
+
+## Mobile 規範
+
+- Header 第一排保持 Logo、登入、選單，不擠壓註冊。
+- 風格與語言切換可放入 mobile menu 第一區。
+- Hero 手機順序為標籤、主標、副標、CTA、圖片、信任點。
+- 活動公告、織女付費推廣、熱門手作委託、秦時線自營選品使用水平 scroll-snap。
+- 底部 Sticky CTA 顯示「探索作品」與「開始委託」，支援 iPhone safe area。

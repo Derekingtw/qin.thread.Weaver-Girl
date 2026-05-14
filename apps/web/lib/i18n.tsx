@@ -61,25 +61,25 @@ export const dictionary: Dictionary = {
   loginRegister: { "zh-Hant": "登入 / 註冊", "zh-Hans": "登录 / 注册", en: "Login / Register" },
   allWorks: { "zh-Hant": "查看作品", "zh-Hans": "查看作品", en: "View Works" },
   allProducts: { "zh-Hant": "查看選品", "zh-Hans": "查看选品", en: "View Selection" },
-  announcementSubtitle: { "zh-Hant": "秦時線近期活動與服務更新", "zh-Hans": "秦时线近期活动与服务更新", en: "Latest Qin Thread updates" },
-  promotedAdsTitle: { "zh-Hant": "織女推薦推廣", "zh-Hans": "织女推荐推广", en: "Featured Knitters" },
-  promotedAdsSubtitle: { "zh-Hant": "固定三格展示，需完成廣告費支付並通過秦時線審核。", "zh-Hans": "固定三格展示，需完成广告费支付并通过秦时线审核。", en: "Three reviewed paid placements for approved knitters." },
+  announcementSubtitle: { "zh-Hant": "秦時線最新活動與服務更新", "zh-Hans": "秦时线最新活动与服务更新", en: "Latest Qin Thread updates" },
+  promotedAdsTitle: { "zh-Hant": "織女推薦", "zh-Hans": "织女推荐", en: "Featured Knitters" },
+  promotedAdsSubtitle: { "zh-Hant": "固定三格曝光，僅展示已審核並完成廣告費支付的秦時線織女。", "zh-Hans": "固定三格曝光，仅展示已审核并完成广告费支付的秦时线织女。", en: "Three reviewed paid placements for approved knitters." },
   paidPromotion: { "zh-Hant": "織女付費推廣", "zh-Hans": "织女付费推广", en: "Paid Promotion" },
   applyPromotion: { "zh-Hant": "申請推廣", "zh-Hans": "申请推广", en: "Apply" },
   emptyAdTitle: { "zh-Hant": "推廣位開放中", "zh-Hans": "推广位开放中", en: "Placement Available" },
-  emptyAdBody: { "zh-Hant": "通過審核的織女可申請首頁曝光，廣告內容不得包含私下聯絡方式。", "zh-Hans": "通过审核的织女可申请首页曝光，广告内容不得包含私下联系方式。", en: "Approved knitters can apply after review and payment." },
+  emptyAdBody: { "zh-Hant": "通過審核的織女可申請首頁曝光，內容需經秦時線審核且不得含私下聯絡方式。", "zh-Hans": "通过审核的织女可申请首页曝光，内容需经秦时线审核且不得含私下联系方式。", en: "Approved knitters can apply after review and payment." },
   hotWorks: { "zh-Hant": "熱門手作委託", "zh-Hans": "热门手作委托", en: "Popular Commissions" },
-  hotWorksSubtitle: { "zh-Hant": "由秦時線協調需求、驗收作品與安排交付。", "zh-Hans": "由秦时线协调需求、验收作品与安排交付。", en: "Coordinated, inspected, and delivered by Qin Thread." },
+  hotWorksSubtitle: { "zh-Hant": "從需求整理、製作追蹤到驗收交付，秦時線協助每一步。", "zh-Hans": "从需求整理、制作追踪到验收交付，秦时线协助每一步。", en: "Coordinated, inspected, and delivered by Qin Thread." },
   platformProductsTitle: { "zh-Hant": "秦時線自營選品", "zh-Hans": "秦时线自营选品", en: "Qin Selection" },
-  platformProductsSubtitle: { "zh-Hant": "材料包、工具與禮盒，由秦時線企劃與管理。", "zh-Hans": "材料包、工具与礼盒，由秦时线企划与管理。", en: "Curated kits, tools, gifts, and owned inventory." },
+  platformProductsSubtitle: { "zh-Hant": "材料包、工具、禮盒與買斷庫存，由秦時線把關後上架。", "zh-Hans": "材料包、工具、礼盒与买断库存，由秦时线把关后上架。", en: "Curated kits, tools, gifts, and owned inventory." },
   cooperationModes: { "zh-Hant": "三種合作方式", "zh-Hans": "三种合作方式", en: "Ways to Work With Us" },
   joinTitle: { "zh-Hant": "成為秦時線織女", "zh-Hans": "成为秦时线织女", en: "Become a Qin Thread Knitter" },
   joinBody: { "zh-Hant": "提交作品與資料，通過審核後即可發布作品、接單與申請曝光。", "zh-Hans": "提交作品与资料，通过审核后即可发布作品、接单与申请曝光。", en: "Submit your work and profile. Once approved, you can publish, take commissions, and apply for exposure." },
   joinNow: { "zh-Hant": "申請入駐", "zh-Hans": "申请入驻", en: "Apply to Join" },
   learnFlow: { "zh-Hant": "了解流程", "zh-Hans": "了解流程", en: "Learn the Flow" },
-  footerLine: { "zh-Hant": "秦時線串起想像與雙手的溫度，讓委託、製作、驗收與交付都更安心。", "zh-Hans": "秦时线串起想象与双手的温度，让委托、制作、验收与交付都更安心。", en: "Qin Thread connects imagination, hands, and trust from commission to delivery." },
+  footerLine: { "zh-Hant": "秦時線串起想像與雙手的溫度，從委託到交付，讓美好在信任中誕生。", "zh-Hans": "秦时线串起想象与双手的温度，从委托到交付，让美好在信任中诞生。", en: "Qin Thread connects imagination, hands, and trust from commission to delivery." },
   quickLinks: { "zh-Hant": "快速連結", "zh-Hans": "快速链接", en: "Quick Links" },
-  support: { "zh-Hant": "服務支援", "zh-Hans": "服务支持", en: "Support" },
+  support: { "zh-Hant": "客服支援", "zh-Hans": "客服支持", en: "Support" },
   subscribe: { "zh-Hant": "訂閱消息", "zh-Hans": "订阅消息", en: "Subscribe" },
   emailPlaceholder: { "zh-Hant": "輸入 Email", "zh-Hans": "输入 Email", en: "Email address" },
   brandStory: { "zh-Hant": "品牌故事", "zh-Hans": "品牌故事", en: "Brand Story" },
@@ -149,7 +149,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 
-export function StyleThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<StyleTheme>("cozy");
 
   useEffect(() => {
@@ -179,6 +179,8 @@ export function StyleThemeProvider({ children }: { children: React.ReactNode }) 
   return <StyleContext.Provider value={value}>{children}</StyleContext.Provider>;
 }
 
+export const StyleThemeProvider = ThemeProvider;
+
 export function useLanguage() {
   const context = useContext(LocaleContext);
   if (!context) throw new Error("useLanguage must be used inside LanguageProvider");
@@ -187,6 +189,6 @@ export function useLanguage() {
 
 export function useStyleTheme() {
   const context = useContext(StyleContext);
-  if (!context) throw new Error("useStyleTheme must be used inside StyleThemeProvider");
+  if (!context) throw new Error("useStyleTheme must be used inside ThemeProvider");
   return context;
 }

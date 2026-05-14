@@ -6,8 +6,8 @@ import { MobileStickyCTA } from "../components/MobileStickyCTA";
 import { LanguageProvider, StyleThemeProvider } from "../lib/i18n";
 
 export const metadata: Metadata = {
-  title: "秦時線 | 手作委託與自營選品",
-  description: "秦時線串起想像與雙手的溫度，提供手作委託、作品驗收、交易保障與自營選品服務。"
+  title: "秦時線 | 手作委託與秦時線自營選品",
+  description: "秦時線串起想像與雙手的溫度，提供手作委託、作品驗收、秦時線保障與自營選品。"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

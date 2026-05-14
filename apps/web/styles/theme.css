@@ -61,6 +61,17 @@ body {
   font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif;
   letter-spacing: 0;
 }
+body.theme-fashion {
+  background: #FFFFFF;
+  font-family: "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+body.theme-chinese {
+  background:
+    linear-gradient(90deg, rgba(181, 138, 74, 0.06) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(181, 138, 74, 0.04) 1px, transparent 1px),
+    #F7F1E6;
+  background-size: 42px 42px;
+}
 a { color: inherit; text-decoration: none; }
 button, input { font: inherit; }
 img { max-width: 100%; display: block; }
@@ -82,9 +93,22 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   gap: 22px;
 }
-.brand-logo { display: inline-flex; align-items: center; min-width: 180px; }
-.brand-logo img { width: 196px; height: auto; }
-.footer-logo img { width: 166px; height: auto; }
+.brand-logo,
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.brand-logo { min-width: 180px; }
+.brand-logo img {
+  width: auto;
+  height: 52px;
+  object-fit: contain;
+}
+.brand-logo.logo-sm img { height: 36px; }
+.brand-logo.logo-lg img { height: 60px; }
+.brand-logo.logo-compact img { max-width: 74px; object-fit: cover; object-position: left center; }
+.footer-logo img { width: auto; height: 48px; object-fit: contain; }
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -160,10 +184,56 @@ body.theme-fashion .soft-badge {
   text-transform: uppercase;
   letter-spacing: .08em;
 }
+body.theme-fashion .site-header {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #E8E2D7;
+}
+body.theme-fashion .desktop-nav {
+  gap: 30px;
+  font-size: 14px;
+}
+body.theme-fashion .hero-wrap {
+  background: #FFFFFF;
+  border-bottom-color: #E8E2D7;
+}
+body.theme-fashion .hero-copy h1 {
+  font-family: "Noto Serif TC", "Songti TC", serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #111111;
+}
+body.theme-fashion .hero-copy p { color: #666666; }
+body.theme-fashion .hero-media {
+  filter: saturate(.86) contrast(1.02);
+}
 body.theme-fashion .card,
 body.theme-fashion .btn,
 body.theme-fashion .login-pill {
-  border-radius: 8px;
+  border-radius: 6px;
+  box-shadow: none;
+}
+body.theme-fashion .btn {
+  min-height: 46px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+body.theme-fashion .process-card {
+  margin-top: 16px;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.theme-fashion .section { padding-top: 64px; }
+body.theme-fashion .section h2 {
+  font-family: "Noto Serif TC", "Songti TC", serif;
+  font-weight: 500;
+}
+body.theme-fashion .listing-card .image-frame,
+body.theme-fashion .platform-card .image-frame,
+body.theme-fashion .ad-card .image-frame {
+  border-radius: 0;
+}
+body.theme-fashion .site-footer {
+  background: #FFFFFF;
 }
 body.theme-chinese .card,
 body.theme-chinese .btn,
@@ -176,6 +246,53 @@ body.theme-chinese .eyebrow,
 body.theme-chinese .soft-badge {
   border: 1px solid rgba(155, 58, 50, .25);
   border-radius: 4px;
+}
+body.theme-chinese .site-header {
+  background: rgba(255, 253, 248, .94);
+  border-bottom: 1px solid rgba(181, 138, 74, .38);
+}
+body.theme-chinese .desktop-nav a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1px;
+  background: var(--accent-warm);
+  transition: width .2s ease;
+}
+body.theme-chinese .desktop-nav a:hover::after { width: 100%; }
+body.theme-chinese .hero-wrap {
+  background:
+    radial-gradient(circle at 72% 18%, rgba(155, 58, 50, .08), transparent 18rem),
+    linear-gradient(90deg, rgba(247, 241, 230, .98), rgba(255, 253, 248, .78)),
+    #F7F1E6;
+  border-bottom-color: rgba(181, 138, 74, .42);
+}
+body.theme-chinese .hero-copy h1,
+body.theme-chinese .section h2,
+body.theme-chinese .page-hero h1 {
+  font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  letter-spacing: .03em;
+}
+body.theme-chinese .mode-illustration,
+body.theme-chinese .process-icon {
+  border-radius: 999px;
+  outline: 1px solid rgba(181, 138, 74, .38);
+  outline-offset: 3px;
+}
+body.theme-chinese .process-card {
+  border-radius: 8px;
+  border-color: rgba(181, 138, 74, .42);
+  background: rgba(255, 253, 248, .88);
+}
+body.theme-chinese .card {
+  background:
+    linear-gradient(135deg, rgba(255,253,248,.96), rgba(251,245,234,.92));
+  border-color: rgba(181, 138, 74, .36);
+}
+body.theme-chinese .site-footer {
+  background:
+    linear-gradient(180deg, rgba(255,253,248,.78), rgba(247,241,230,.94));
+  border-top-color: rgba(181, 138, 74, .38);
 }
 
 .home-page { overflow: hidden; }
@@ -756,7 +873,7 @@ body.theme-chinese .soft-badge {
 @media (max-width: 640px) {
   .container { width: calc(100% - 32px); }
   .header-inner { height: 64px; }
-  .brand-logo img { width: 154px; }
+  .brand-logo img { height: 38px; width: auto; }
   .brand-logo { min-width: 132px; }
   .login-pill { padding: 0 18px; min-height: 36px; }
   .desktop-register { display: none; }

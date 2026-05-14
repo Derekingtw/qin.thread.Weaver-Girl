@@ -6,7 +6,13 @@ import { useLanguage } from "../lib/i18n";
 import { Logo } from "./Logo";
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const subscribeLine = locale === "en"
+    ? "Receive seasonal updates, new works, and Qin Thread service notes."
+    : locale === "zh-Hans"
+      ? "订阅消息，掌握秦时线最新活动、选品与服务更新。"
+      : "訂閱消息，掌握秦時線最新活動、選品與服務更新。";
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -29,7 +35,7 @@ export function Footer() {
         </div>
         <div>
           <h3>{t("subscribe")}</h3>
-          <p>留下信箱，接收秦時線活動、選品與服務更新。</p>
+          <p>{subscribeLine}</p>
           <div className="email-row">
             <input placeholder={t("emailPlaceholder")} />
             <button type="button" aria-label={t("subscribe")}><ArrowRight size={18} /></button>

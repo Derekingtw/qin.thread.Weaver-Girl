@@ -1,6 +1,6 @@
 # 秦時線 Qinshixian
 
-秦時線是手作委託、織女入駐、平台自營商品與付費推廣的 MVP monorepo。
+秦時線是一個手作委託與織女接單的 MVP monorepo，包含買家前台、公司後台、NestJS API、Prisma/PostgreSQL、Render 部署設定與品牌網站內容。
 
 ## Tech Stack
 
@@ -32,9 +32,26 @@ Local URLs:
 - Postgres: localhost:5432
 - Valkey: localhost:6379
 
+## Brand Assets
+
+The official logo provided in Codex is stored and used directly:
+
+- Web main logo: `apps/web/public/brand/qinshixian-logo-main.png`
+- Web light/dark variants: `apps/web/public/brand/qinshixian-logo-main-light.png`, `apps/web/public/brand/qinshixian-logo-main-dark.png`
+- Admin logo: `apps/admin-web/public/brand/qinshixian-logo-main.png`
+- Reference copy: `docs/references/qinshixian-logo-main.png`
+
+Do not redraw, imitate, replace with text, or alter the logo lettering. Only size, whitespace fit, and light/dark background adaptation are allowed.
+
+Theme reference images are saved at:
+
+- `docs/references/fashion-theme-reference.png`
+- `docs/references/cozy-theme-reference.png`
+- `docs/references/chinese-theme-reference.png`
+
 ## Hero Image
 
-The Codex attachment has been saved to:
+The Codex hero image has been saved to:
 
 - `apps/web/public/brand/hero-qinshixian-yarn.png`
 - `docs/references/hero-qinshixian-yarn.png`
@@ -82,9 +99,3 @@ See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
 Frontend language options: `繁 / 简 / EN`.
 
 Frontend style options: Fashion, Cozy, Chinese. Cozy is the default. The theme switcher is saved in localStorage and authenticated users can save it through `POST /user/preferred-style`.
-
-## Brand Assets
-
-- Official logo source: `docs/references/qinshixian-logo-official.png`
-- Web logo asset: `apps/web/public/brand/qinshixian-logo-official-cropped.png`
-- Theme references: `docs/references/fashion-theme-reference.png`, `docs/references/cozy-theme-reference.png`, `docs/references/chinese-theme-reference.png`

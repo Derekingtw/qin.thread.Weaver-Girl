@@ -4,5 +4,6 @@ export * from "./designTokens.js";
 export * from "./domainRules.js";
 export * from "./enums.js";
 export * from "./money.js";
+export * from "./themes/index.js";
 export * from "./validation.js";
 export * from "./i18n/locales.js";
