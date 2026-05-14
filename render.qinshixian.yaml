@@ -12,7 +12,7 @@ services:
     plan: starter
     region: singapore
     buildCommand: npm install && npx prisma generate && npm run build -w @knit/shared && npm run build -w apps-api
-    startCommand: node -e "const fs=require('fs'); for (const f of ['prisma/migrations/migration_lock.toml','prisma/migrations/20260513000000_init/migration.sql','prisma/migrations/20260513030000_homepage_ads_locale/migration.sql']) { let s=fs.readFileSync(f,'utf8').replace(/^\uFEFF/,''); fs.writeFileSync(f,s); }" && npx prisma migrate deploy && NODE_PATH=apps/api/node_modules:node_modules node apps/api/dist/apps/api/src/main.js
+    startCommand: npx prisma migrate deploy && NODE_PATH=apps/api/node_modules:node_modules node apps/api/dist/apps/api/src/main.js
     healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
