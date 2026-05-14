@@ -79,3 +79,17 @@ Homepage has exactly three knitter promotion slots. Ads must be paid with `payme
 ## Object Storage
 
 `media_assets` records image/video/file URLs and usage. First version supports fixed public assets, URL input, and mock upload. Production must use object storage rather than Render filesystem.
+
+## 2026-05-14 Frontend Upgrade
+
+Locale now supports `zh-Hant`, `zh-Hans`, and `en`. Missing Simplified or English content falls back to Traditional Chinese. Frontend language selection is saved in localStorage/cookie and authenticated users can save it through `POST /user/preferred-locale`.
+
+Frontend copy should use `秦時線` as the main subject instead of generic `平台` wording. Legal, policy, and formal transaction contexts may still use `平台` when it is the correct regulatory or contractual term.
+
+Frontend pages must not display raw enum codes such as `COMMISSION_5`, `PLATFORM_BUYOUT_SERVICE`, or `READY_MADE_TO_PLATFORM`. Cooperation modes go through a display mapper with Traditional Chinese, Simplified Chinese, and English labels.
+
+`/guarantee` is the formal Qin Guarantee page. Header navigation label is `秦時線保障`. It covers pre-commission confirmation, deposit protection, production tracking, inspection, balance payment, shipping, privacy isolation, dispute handling, knitter review, and paid promotion rules.
+
+`/about` includes brand story, what Qin Thread does, buyer value, knitter value, three cooperation modes, values, and CTA. The cooperation modes are `秦時線抽成委託`, `秦時線買斷服務`, and `成衣收購`.
+
+Frontend supports three selectable styles: `fashion`, `cozy`, and `chinese`. `cozy` is default. Preference is saved in `localStorage` as `qinshixian_style`; authenticated users can save it to `users.preferred_style` through `POST /user/preferred-style`. Admin homepage settings include `default_style`, `allow_style_switch`, and `enabled_styles`.

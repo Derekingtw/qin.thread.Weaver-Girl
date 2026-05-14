@@ -67,6 +67,7 @@ enum ListingType {
 enum CooperationMode {
   COMMISSION_5
   PLATFORM_BUYOUT_SERVICE
+  READY_MADE_TO_PLATFORM
   PLATFORM_OWNED_INVENTORY
 }
 
@@ -330,6 +331,7 @@ model User {
   first_campaign_id   String?
   first_tracking_link_id String?
   preferred_locale    String?
+  preferred_style     String?
   created_at          DateTime  @default(now())
   updated_at          DateTime  @updatedAt
   deleted_at          DateTime?
@@ -937,6 +939,12 @@ model CmsPage {
   slug       String    @unique
   title      String
   content    String    @db.Text
+  title_zh_hant   String?
+  title_zh_hans   String?
+  title_en        String?
+  content_zh_hant String? @db.Text
+  content_zh_hans String? @db.Text
+  content_en      String? @db.Text
   status     CmsStatus @default(DRAFT)
   created_by String
   updated_by String?
@@ -965,31 +973,45 @@ model HomepageSetting {
   id                         String   @id @default(uuid())
   hero_badge_zh_hant          String
   hero_badge_zh_hans          String?
+  hero_badge_en               String?
   hero_slogan_zh_hant         String
   hero_slogan_zh_hans         String?
+  hero_slogan_en              String?
   hero_subtitle_zh_hant       String   @db.Text
   hero_subtitle_zh_hans       String?  @db.Text
+  hero_subtitle_en            String?  @db.Text
   primary_cta_text_zh_hant    String
   primary_cta_text_zh_hans    String?
+  primary_cta_text_en         String?
   primary_cta_url             String
   secondary_cta_text_zh_hant  String
   secondary_cta_text_zh_hans  String?
+  secondary_cta_text_en       String?
   secondary_cta_url           String
   hero_image_url              String?
   hero_image_alt_zh_hant      String?
   hero_image_alt_zh_hans      String?
+  hero_image_alt_en           String?
   show_hero_stat_card         Boolean  @default(false)
   hero_stat_label_zh_hant     String?
   hero_stat_label_zh_hans     String?
+  hero_stat_label_en          String?
   hero_stat_value             String?
   hero_stat_extra_zh_hant     String?
   hero_stat_extra_zh_hans     String?
+  hero_stat_extra_en          String?
   trust_point_1_zh_hant       String?
   trust_point_1_zh_hans       String?
+  trust_point_1_en            String?
   trust_point_2_zh_hant       String?
   trust_point_2_zh_hans       String?
+  trust_point_2_en            String?
   trust_point_3_zh_hant       String?
   trust_point_3_zh_hans       String?
+  trust_point_3_en            String?
+  default_style               String?
+  allow_style_switch          Boolean  @default(true)
+  enabled_styles              Json?
   updated_by                  String?
   created_at                  DateTime @default(now())
   updated_at                  DateTime @updatedAt
@@ -1002,10 +1024,13 @@ model Announcement {
   id              String             @id @default(uuid())
   title_zh_hant   String
   title_zh_hans   String?
+  title_en        String?
   summary_zh_hant String?            @db.Text
   summary_zh_hans String?            @db.Text
+  summary_en      String?            @db.Text
   content_zh_hant String?            @db.Text
   content_zh_hans String?            @db.Text
+  content_en      String?            @db.Text
   image_url       String?
   link_url        String?
   starts_at       DateTime?
@@ -1044,8 +1069,10 @@ model AdPackage {
   id                  String          @id @default(uuid())
   name_zh_hant         String
   name_zh_hans         String?
+  name_en              String?
   description_zh_hant  String?         @db.Text
   description_zh_hans  String?         @db.Text
+  description_en       String?         @db.Text
   duration_days        Int
   price_cents          Int
   currency             String          @default("CNY")
@@ -1063,6 +1090,7 @@ model AdSlot {
   code          String          @unique
   name_zh_hant  String
   name_zh_hans  String?
+  name_en       String?
   placement     AdSlotPlacement @default(HOME_KNITTER_PROMO)
   slot_index    Int
   status        AdSlotStatus    @default(ACTIVE)
@@ -1081,8 +1109,10 @@ model AdApplication {
   package_id             String
   ad_title_zh_hant       String
   ad_title_zh_hans       String?
+  ad_title_en            String?
   ad_subtitle_zh_hant    String?
   ad_subtitle_zh_hans    String?
+  ad_subtitle_en         String?
   ad_image_url           String?
   requested_start_at     DateTime?
   preferred_slot_index   Int?

@@ -5,6 +5,7 @@ import {
   AuditOutlined,
   DashboardOutlined,
   DollarOutlined,
+  FileTextOutlined,
   HomeOutlined,
   MessageOutlined,
   NotificationOutlined,
@@ -22,26 +23,31 @@ const apiBase = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 const menuItems = [
   { key: "dashboard", icon: <DashboardOutlined />, label: "Dashboard" },
   { key: "homepage", icon: <HomeOutlined />, label: "首頁設定" },
+  { key: "cms", icon: <FileTextOutlined />, label: "頁面內容管理" },
+  { key: "style", icon: <SettingOutlined />, label: "風格管理" },
   { key: "announcements", icon: <NotificationOutlined />, label: "活動公告" },
-  { key: "platform-products", icon: <ShoppingOutlined />, label: "平台自營商品" },
+  { key: "platform-products", icon: <ShoppingOutlined />, label: "秦時線自營選品" },
   { key: "ads", icon: <QrcodeOutlined />, label: "織女廣告管理" },
   { key: "media", icon: <PictureOutlined />, label: "媒體素材" },
   { key: "knitters", icon: <TeamOutlined />, label: "織女審核" },
-  { key: "orders", icon: <ShoppingOutlined />, label: "訂單與出貨" },
-  { key: "settlements", icon: <DollarOutlined />, label: "付款與結算" },
-  { key: "tickets", icon: <MessageOutlined />, label: "客服 ticket" },
-  { key: "cms", icon: <SettingOutlined />, label: "CMS" },
+  { key: "orders", icon: <ShoppingOutlined />, label: "訂單管理" },
+  { key: "settlements", icon: <DollarOutlined />, label: "結算管理" },
+  { key: "tickets", icon: <MessageOutlined />, label: "客服工單" },
   { key: "audit", icon: <AuditOutlined />, label: "Audit Logs" }
 ];
 
+function authHeaders() {
+  return { "Content-Type": "application/json", "x-user-id": localStorage.getItem("qinshixian_admin_user_id") ?? "" };
+}
+
 function Dashboard() {
   const stats = [
-    ["今日註冊", 24],
+    ["註冊使用者", 24],
     ["待審核織女", 5],
     ["LIVE 作品", 18],
-    ["平台自營商品", 4],
-    ["廣告收入", "¥299"],
-    ["待處理客服", 3]
+    ["秦時線自營選品", 4],
+    ["廣告費收入", "¥299"],
+    ["待處理工單", 3]
   ];
   return <div className="admin-grid">{stats.map(([label, value]) => <Card key={label}><Statistic title={label} value={value} /></Card>)}</div>;
 }
@@ -55,32 +61,38 @@ function HomepageSettings() {
   async function submit(values: Record<string, unknown>) {
     await fetch(`${apiBase}/admin/homepage-settings`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json", "x-user-id": localStorage.getItem("qinshixian_admin_user_id") ?? "" },
+      headers: authHeaders(),
       body: JSON.stringify(values)
     }).catch(() => undefined);
   }
 
   return (
     <div className="stack">
-      <Card title="首頁 Hero 與文案設定">
+      <Card title="首頁 Hero 與風格設定">
         <Form
           form={form}
           layout="vertical"
           className="wide-form"
           initialValues={{
             hero_badge_zh_hant: "平台交易・安心委託・溫柔陪伴",
+            hero_badge_en: "Secure commissions, crafted with care",
             hero_slogan_zh_hant: "讓每一件手作，都被溫柔對待",
+            hero_slogan_en: "Every handmade piece deserves to be treated with warmth.",
             hero_subtitle_zh_hant: "我們串起想像與雙手的溫度，從委託到交付，讓美好在信任中誕生。",
+            hero_subtitle_en: "From commission to delivery, Qin Thread connects imagination, hands, and trust.",
             primary_cta_text_zh_hant: "開始委託",
+            primary_cta_text_en: "Start a Commission",
             primary_cta_url: "/works",
             secondary_cta_text_zh_hant: "探索作品",
+            secondary_cta_text_en: "Explore Works",
             secondary_cta_url: "/works",
             hero_image_url: "/brand/hero-qinshixian-yarn.png",
             hero_image_alt_zh_hant: "秦時線毛線與編織工具形象圖",
+            hero_image_alt_en: "Qin Thread yarn and knitting tools",
             show_hero_stat_card: false,
-            hero_stat_label_zh_hant: "已完成委託",
-            hero_stat_value: "2,341 件",
-            hero_stat_extra_zh_hant: "好評率 99%",
+            default_style: "cozy",
+            allow_style_switch: true,
+            enabled_styles: ["fashion", "cozy", "chinese"],
             trust_point_1_zh_hant: "安心交易",
             trust_point_2_zh_hant: "專業協調",
             trust_point_3_zh_hant: "品質驗收"
@@ -89,21 +101,24 @@ function HomepageSettings() {
         >
           <div className="form-grid">
             <Form.Item label="Hero 小標籤（繁）" name="hero_badge_zh_hant"><Input /></Form.Item>
-            <Form.Item label="Hero 小標籤（简）" name="hero_badge_zh_hans"><Input /></Form.Item>
+            <Form.Item label="Hero 小標籤（EN）" name="hero_badge_en"><Input /></Form.Item>
             <Form.Item label="主 Slogan（繁）" name="hero_slogan_zh_hant"><Input /></Form.Item>
-            <Form.Item label="主 Slogan（简）" name="hero_slogan_zh_hans"><Input /></Form.Item>
+            <Form.Item label="主 Slogan（EN）" name="hero_slogan_en"><Input /></Form.Item>
             <Form.Item label="副標題（繁）" name="hero_subtitle_zh_hant"><Input.TextArea rows={3} /></Form.Item>
-            <Form.Item label="副標題（简）" name="hero_subtitle_zh_hans"><Input.TextArea rows={3} /></Form.Item>
-            <Form.Item label="主按鈕文字" name="primary_cta_text_zh_hant"><Input /></Form.Item>
+            <Form.Item label="副標題（EN）" name="hero_subtitle_en"><Input.TextArea rows={3} /></Form.Item>
+            <Form.Item label="主按鈕文字（繁）" name="primary_cta_text_zh_hant"><Input /></Form.Item>
+            <Form.Item label="主按鈕文字（EN）" name="primary_cta_text_en"><Input /></Form.Item>
             <Form.Item label="主按鈕 URL" name="primary_cta_url"><Input /></Form.Item>
-            <Form.Item label="次按鈕文字" name="secondary_cta_text_zh_hant"><Input /></Form.Item>
+            <Form.Item label="次按鈕文字（繁）" name="secondary_cta_text_zh_hant"><Input /></Form.Item>
+            <Form.Item label="次按鈕文字（EN）" name="secondary_cta_text_en"><Input /></Form.Item>
             <Form.Item label="次按鈕 URL" name="secondary_cta_url"><Input /></Form.Item>
             <Form.Item label="Hero 圖片 URL" name="hero_image_url"><Input /></Form.Item>
-            <Form.Item label="Hero 圖片 alt" name="hero_image_alt_zh_hant"><Input /></Form.Item>
-            <Form.Item label="顯示統計卡片" name="show_hero_stat_card" valuePropName="checked"><Switch /></Form.Item>
-            <Form.Item label="統計文字" name="hero_stat_label_zh_hant"><Input /></Form.Item>
-            <Form.Item label="統計數字" name="hero_stat_value"><Input /></Form.Item>
-            <Form.Item label="統計補充" name="hero_stat_extra_zh_hant"><Input /></Form.Item>
+            <Form.Item label="Hero 圖片 alt（繁）" name="hero_image_alt_zh_hant"><Input /></Form.Item>
+            <Form.Item label="Hero 圖片 alt（EN）" name="hero_image_alt_en"><Input /></Form.Item>
+            <Form.Item label="是否顯示統計卡片" name="show_hero_stat_card" valuePropName="checked"><Switch /></Form.Item>
+            <Form.Item label="預設風格" name="default_style"><Select options={["fashion", "cozy", "chinese"].map((value) => ({ value }))} /></Form.Item>
+            <Form.Item label="允許使用者切換風格" name="allow_style_switch" valuePropName="checked"><Switch /></Form.Item>
+            <Form.Item label="啟用風格列表" name="enabled_styles"><Select mode="multiple" options={["fashion", "cozy", "chinese"].map((value) => ({ value }))} /></Form.Item>
             <Form.Item label="信任點 1" name="trust_point_1_zh_hant"><Input /></Form.Item>
             <Form.Item label="信任點 2" name="trust_point_2_zh_hant"><Input /></Form.Item>
             <Form.Item label="信任點 3" name="trust_point_3_zh_hant"><Input /></Form.Item>
@@ -125,15 +140,71 @@ function HomepageSettings() {
   );
 }
 
+function CmsPages() {
+  return (
+    <div className="stack">
+      <Card title="頁面內容管理">
+        <Form layout="vertical" className="wide-form">
+          <Form.Item label="頁面"><Select defaultValue="about" options={[
+            { value: "about", label: "關於我們" },
+            { value: "guarantee", label: "秦時線保障" },
+            { value: "terms", label: "使用者協議" },
+            { value: "privacy", label: "隱私權政策" }
+          ]} /></Form.Item>
+          <div className="form-grid">
+            <Form.Item label="標題（繁）"><Input defaultValue="關於秦時線" /></Form.Item>
+            <Form.Item label="標題（简）"><Input defaultValue="关于秦时线" /></Form.Item>
+            <Form.Item label="Title (EN)"><Input defaultValue="About Qin Thread" /></Form.Item>
+            <Form.Item label="狀態"><Select defaultValue="PUBLISHED" options={["DRAFT", "PUBLISHED", "ARCHIVED"].map((value) => ({ value }))} /></Form.Item>
+            <Form.Item label="內容（繁）"><Input.TextArea rows={5} defaultValue="秦時線相信，手作不只是商品，而是一段時間、一份心意與一雙手的溫度。" /></Form.Item>
+            <Form.Item label="Content (EN)"><Input.TextArea rows={5} defaultValue="Qin Thread believes handmade work carries time, care, and trust." /></Form.Item>
+          </div>
+          <Button type="primary">儲存頁面內容</Button>
+        </Form>
+      </Card>
+    </div>
+  );
+}
+
+function StyleManagement() {
+  const cards = [
+    ["fashion", "時尚風", "高級、克制、精品雜誌感，適合高端選品與禮盒系列。"],
+    ["cozy", "溫馨風", "柔和、親切、手作溫度，是秦時線預設品牌風格。"],
+    ["chinese", "中國風", "雅致、國風、書卷感，適合節氣活動與秦時線文化系列。"]
+  ];
+  return (
+    <div className="stack">
+      <Card title="風格管理">
+        <Form layout="vertical" className="wide-form">
+          <div className="form-grid">
+            <Form.Item label="預設風格"><Select defaultValue="cozy" options={cards.map(([value, label]) => ({ value, label }))} /></Form.Item>
+            <Form.Item label="允許使用者切換"><Switch defaultChecked /></Form.Item>
+            <Form.Item label="啟用風格"><Select mode="multiple" defaultValue={["fashion", "cozy", "chinese"]} options={cards.map(([value, label]) => ({ value, label }))} /></Form.Item>
+          </div>
+          <Button type="primary">儲存風格設定</Button>
+        </Form>
+      </Card>
+      <div className="theme-preview-grid">
+        {cards.map(([value, title, body]) => (
+          <Card className={`theme-preview ${value}`} key={value} title={title}>
+            <p>{body}</p>
+            <Button>預覽</Button>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Announcements() {
   return <CrudTable title="活動公告" rows={[
-    { key: 1, title: "春季毛線委託活動", status: "PUBLISHED", pinned: "是", order: 1 },
+    { key: 1, title: "春季毛線委託活動", status: "PUBLISHED", pinned: "置頂", order: 1 },
     { key: 2, title: "新織女入駐招募", status: "PUBLISHED", pinned: "否", order: 2 }
   ]} />;
 }
 
 function PlatformProducts() {
-  return <CrudTable title="平台自營商品" rows={[
+  return <CrudTable title="秦時線自營選品" rows={[
     { key: 1, title: "秦時線・柔霧羊毛線組", status: "LIVE", pinned: "FULL_PAYMENT", order: 42 },
     { key: 2, title: "手作禮盒・暖心系列", status: "LIVE", pinned: "DEPOSIT_50", order: 12 }
   ]} />;
@@ -149,8 +220,8 @@ function Ads() {
       ]} columns={[{ title: "方案", dataIndex: "name" }, { title: "天數", dataIndex: "days" }, { title: "價格", dataIndex: "price" }]} />
     </Card>
     <CrudTable title="廣告申請列表" rows={[
-      { key: 1, title: "青霧線坊・柔霧圍巾主推", status: "LIVE", pinned: "slot 1", order: "PAID" },
-      { key: 2, title: "待付款廣告", status: "APPROVED_PENDING_PAYMENT", pinned: "slot 2", order: "PENDING" }
+      { key: 1, title: "柔霧圍巾訂製", status: "LIVE", pinned: "slot 1", order: "PAID" },
+      { key: 2, title: "節氣手作推薦", status: "APPROVED_PENDING_PAYMENT", pinned: "slot 2", order: "PENDING" }
     ]} />
   </div>;
 }
@@ -175,7 +246,7 @@ function CrudTable({ title, rows }: { title: string; rows: Array<Record<string, 
         { title: "名稱", dataIndex: "title" },
         { title: "狀態", dataIndex: "status", render: (value) => <Tag color={String(value).includes("LIVE") || String(value).includes("PUBLISHED") ? "green" : "gold"}>{String(value)}</Tag> },
         { title: "設定", dataIndex: "pinned" },
-        { title: "排序/庫存", dataIndex: "order" },
+        { title: "排序/數值", dataIndex: "order" },
         { title: "操作", render: () => <Space><Button>編輯</Button><Button>發布/下架</Button></Space> }
       ]} />
     </Card>
@@ -187,11 +258,13 @@ function Root() {
   const title = menuItems.find((item) => item.key === selected)?.label?.toString() ?? "後台";
   const content = selected === "dashboard" ? <Dashboard /> :
     selected === "homepage" ? <HomepageSettings /> :
+    selected === "cms" ? <CmsPages /> :
+    selected === "style" ? <StyleManagement /> :
     selected === "announcements" ? <Announcements /> :
     selected === "platform-products" ? <PlatformProducts /> :
     selected === "ads" ? <Ads /> :
     selected === "media" ? <Media /> :
-    selected === "knitters" ? <CrudTable title="織女審核" rows={[{ key: 1, title: "待審核織女", status: "PENDING_REVIEW", pinned: "毛衣/圍巾", order: "-" }]} /> :
+    selected === "knitters" ? <CrudTable title="織女審核" rows={[{ key: 1, title: "待審核織女", status: "PENDING_REVIEW", pinned: "圍巾/披肩", order: "-" }]} /> :
     selected === "audit" ? <CrudTable title="Audit Logs" rows={[{ key: 1, title: "UPDATE_HOMEPAGE_SETTINGS", status: "OK", pinned: "homepage_settings", order: "latest" }]} /> :
     <CrudTable title={title} rows={[{ key: 1, title: "MVP 資料", status: "ACTIVE", pinned: "秦時線", order: 1 }]} />;
 

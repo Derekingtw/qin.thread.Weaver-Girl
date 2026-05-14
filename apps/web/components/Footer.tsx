@@ -18,24 +18,25 @@ export function Footer() {
           <h3>{t("quickLinks")}</h3>
           <Link href="/works">{t("findWorks")}</Link>
           <Link href="/platform-products">{t("platformProducts")}</Link>
-          <Link href="/knitter/join">{t("knitterJoin")}</Link>
+          <Link href="/announcements">{t("announcements")}</Link>
+          <Link href="/guarantee">{t("protection")}</Link>
         </div>
         <div>
           <h3>{t("about")}</h3>
-          <Link href="/about">品牌故事</Link>
-          <Link href="/about">合作模式</Link>
-          <Link href="/legal">使用者協議</Link>
+          <Link href="/about">{t("brandStory")}</Link>
+          <Link href="/about#cooperation">{t("cooperationModes")}</Link>
+          <Link href="/legal">{t("support")}</Link>
         </div>
         <div>
           <h3>{t("subscribe")}</h3>
-          <p>接收平台公告、材料包上新與活動消息。</p>
+          <p>留下信箱，接收秦時線活動、選品與服務更新。</p>
           <div className="email-row">
             <input placeholder={t("emailPlaceholder")} />
-            <button type="button" aria-label="訂閱"><ArrowRight size={18} /></button>
+            <button type="button" aria-label={t("subscribe")}><ArrowRight size={18} /></button>
           </div>
         </div>
       </div>
-      <div className="container copyright">© 2026 秦時線 Qinshixian. All rights reserved.</div>
+      <div className="container copyright">© 2026 秦時線 Qin Thread. All rights reserved.</div>
     </footer>
   );
 }

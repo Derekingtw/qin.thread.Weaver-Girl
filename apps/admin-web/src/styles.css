@@ -51,8 +51,17 @@ body {
   object-fit: cover;
   border-radius: 8px;
 }
+.theme-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 16px;
+}
+.theme-preview.fashion { border-color: #DED6C8; background: #F8F5EF; }
+.theme-preview.cozy { border-color: #E9E2D8; background: #FFF9F3; }
+.theme-preview.chinese { border-color: #DED2BD; background: #FFFDF8; }
+.theme-preview p { min-height: 48px; color: #6F777C; }
 @media (max-width: 900px) {
   .admin-grid { grid-template-columns: repeat(2, 1fr); }
   .qr-row { flex-direction: column; }
-  .form-grid, .preview-card { grid-template-columns: 1fr; }
+  .form-grid, .preview-card, .theme-preview-grid { grid-template-columns: 1fr; }
 }

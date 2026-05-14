@@ -2,26 +2,30 @@
 
 import Link from "next/link";
 import { ChartNoAxesColumnIncreasing, CircleDot, Shirt } from "lucide-react";
-import { pickLocalizedText, useLanguage } from "../lib/i18n";
+import { useLanguage } from "../lib/i18n";
+import { cooperationDescription, cooperationLabel } from "../lib/cooperationDisplay";
 
-type Localized = { zhHant?: string | null; zhHans?: string | null };
 const icons = [ChartNoAxesColumnIncreasing, CircleDot, Shirt];
+const defaultModes = ["COMMISSION_5", "PLATFORM_BUYOUT_SERVICE", "READY_MADE_TO_PLATFORM"];
 
-export function CooperationModes({ modes }: { modes: Array<{ title: Localized; body: Localized }> }) {
+export function CooperationModes({ modes }: { modes: Array<{ mode?: string }> }) {
   const { locale, t } = useLanguage();
+  const visibleModes = modes.length ? modes.map((item) => item.mode || "COMMISSION_5") : defaultModes;
   return (
-    <section className="container section">
-      <div className="section-head"><h2>{t("cooperationModes")}</h2></div>
+    <section className="container section" id="cooperation">
+      <div className="section-head">
+        <h2>{t("cooperationModes")}</h2>
+        <Link className="section-link" href="/about#cooperation">{t("learnFlow")}</Link>
+      </div>
       <div className="grid-3">
-        {modes.map((mode, index) => {
+        {visibleModes.map((mode, index) => {
           const Icon = icons[index] || CircleDot;
           return (
-            <article className="card mode-card" key={pickLocalizedText(mode.title, locale)}>
+            <article className="card mode-card" key={mode}>
               <div className="mode-illustration"><Icon size={38} /></div>
               <div>
-                <h3 className="card-title">{pickLocalizedText(mode.title, locale)}</h3>
-                <p className="card-desc">{pickLocalizedText(mode.body, locale)}</p>
-                <Link className="section-link" href="/about">了解更多</Link>
+                <h3 className="card-title">{cooperationLabel(mode, locale)}</h3>
+                <p className="card-desc">{cooperationDescription(mode, locale)}</p>
               </div>
             </article>
           );

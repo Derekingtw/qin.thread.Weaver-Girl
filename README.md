@@ -69,3 +69,16 @@ Render deployment is defined in `render.yaml` and uses only Qinshixian names:
 Do not reuse OA services, OA `DATABASE_URL`, OA Redis/Key Value, OA env groups, OA domains, or OA `render.yaml`.
 
 See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
+
+## Current Frontend Pages
+
+- Web: https://qinshixian-web-prod.onrender.com/
+- About: `/about`
+- Qin Guarantee: `/guarantee`
+- Works: `/works`
+- Qin Selection: `/platform-products`
+- Announcements: `/announcements`
+
+Frontend language options: `繁 / 简 / EN`.
+
+Frontend style options: Fashion, Cozy, Chinese. Cozy is the default. The theme switcher is saved in localStorage and authenticated users can save it through `POST /user/preferred-style`.

@@ -5,7 +5,7 @@ import { ShoppingCart } from "lucide-react";
 import { pickLocalizedText, useLanguage } from "../lib/i18n";
 import { ImageWithFallback } from "./ImageWithFallback";
 
-type Localized = { zhHant?: string | null; zhHans?: string | null };
+type Localized = { zhHant?: string | null; zhHans?: string | null; en?: string | null };
 type Product = { id: string; title: Localized; price: string; stock: Localized; imageUrl: string };
 
 export function PlatformProductSection({ products }: { products: Product[] }) {
@@ -19,7 +19,7 @@ export function PlatformProductSection({ products }: { products: Product[] }) {
         </div>
         <Link className="section-link" href="/platform-products">{t("allProducts")}</Link>
       </div>
-      <div className="grid-4">
+      <div className="grid-4 snap-row">
         {products.map((item) => (
           <article className="card listing-card platform-card" key={item.id}>
             <div className="image-frame"><ImageWithFallback src={item.imageUrl} alt={pickLocalizedText(item.title, locale)} /></div>

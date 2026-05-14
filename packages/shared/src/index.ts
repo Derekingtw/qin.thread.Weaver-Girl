@@ -1,4 +1,5 @@
 export * from "./contactInfoDetector.js";
+export * from "./cooperationModeDisplay.js";
 export * from "./designTokens.js";
 export * from "./domainRules.js";
 export * from "./enums.js";

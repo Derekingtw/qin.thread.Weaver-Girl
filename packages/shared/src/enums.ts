@@ -1,10 +1,11 @@
 export const DEFAULT_CURRENCY = "CNY";
 export const CONTACT_INFO_ERROR =
-  "廣告與作品內容不得包含手機、微信、Email、LINE、Telegram、QQ 等站外聯絡資訊。";
+  "內容不得包含站外聯絡資訊，包含手機、微信、Email、LINE、Telegram、QQ 等私下聯絡方式。";
 
 export enum CooperationMode {
   COMMISSION_5 = "COMMISSION_5",
   PLATFORM_BUYOUT_SERVICE = "PLATFORM_BUYOUT_SERVICE",
+  READY_MADE_TO_PLATFORM = "READY_MADE_TO_PLATFORM",
   PLATFORM_OWNED_INVENTORY = "PLATFORM_OWNED_INVENTORY"
 }
 

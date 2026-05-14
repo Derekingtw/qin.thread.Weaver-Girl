@@ -47,3 +47,23 @@ Knitter registration uses a five-step visual stepper:
 5. Submitted
 
 Employee invite registration stays on the hidden admin route.
+
+## Header And Mobile
+
+Header left uses the Qinshixian logo only. Do not show `織物平台` as a brand label.
+
+Desktop header order: Qinshixian Logo, 找作品, 秦時線自營, 活動公告, 織女入駐, 秦時線保障, 關於我們, 風格切換, 繁 / 简 / EN, 登入 / 註冊.
+
+Mobile header keeps the first row compact: Logo, 登入, menu. Language and style controls live at the top of the mobile menu. Registration is available in the menu and auth flow, not squeezed into the top bar.
+
+Home mobile cards for announcements, paid promotion, hot works, and Qin selection use horizontal scroll-snap rows. A fixed bottom CTA provides 探索作品 and 開始委託 with safe-area padding.
+
+## About And Guarantee
+
+`/about` should feel like a brand service story, not a generic company profile. Use short sections, cards, value chips, and a strong CTA.
+
+`/guarantee` should feel like a premium service assurance page. Use rule cards, icons, summary chips, and generous spacing. Avoid presenting the content as a dense legal wall.
+
+## Style Theme Toggle
+
+The theme switcher appears near the language switcher on desktop and inside the mobile menu. It must not reload the page. It only changes visual tokens and classes. Logo, routing, and content remain unchanged.

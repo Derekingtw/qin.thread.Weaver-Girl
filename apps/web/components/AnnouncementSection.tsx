@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Megaphone } from "lucide-react";
 import { pickLocalizedText, useLanguage } from "../lib/i18n";
 
-type Localized = { zhHant?: string | null; zhHans?: string | null };
+type Localized = { zhHant?: string | null; zhHans?: string | null; en?: string | null };
 
 export function AnnouncementSection({ announcements }: { announcements: Array<{ id: string; pinned: boolean; title: Localized; summary: Localized; date: string }> }) {
   const { locale, t } = useLanguage();
@@ -12,9 +12,9 @@ export function AnnouncementSection({ announcements }: { announcements: Array<{ 
     <section className="container section" id="announcements">
       <div className="section-head">
         <div className="section-title"><h2>{t("announcements")}</h2><span className="soft-badge">{t("announcementSubtitle")}</span></div>
-        <Link className="section-link" href="/announcements">查看全部</Link>
+        <Link className="section-link" href="/announcements">{t("allWorks")}</Link>
       </div>
-      <div className="grid-3">
+      <div className="grid-3 snap-row">
         {announcements.slice(0, 3).map((item) => (
           <article className="card announcement-card" key={item.id}>
             <div className="section-title">

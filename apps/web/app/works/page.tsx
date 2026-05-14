@@ -8,7 +8,7 @@ export default function WorksPage() {
         <div className="section-head">
           <div>
             <h1>找作品</h1>
-            <p className="section-subtitle">平台審核上架的手作委託，買家與織女資料全程隔離。</p>
+            <p className="section-subtitle">由秦時線協調需求、付款、驗收與交付，讓手作委託更安心。</p>
           </div>
         </div>
       </section>

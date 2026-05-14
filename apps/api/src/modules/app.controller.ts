@@ -69,10 +69,19 @@ export class AppController {
   }
 
   @Post("user/preferred-locale")
-  preferredLocale(@Headers() headers: Record<string, string>, @Body() dto: { locale: "zh-Hant" | "zh-Hans" }) {
+  preferredLocale(@Headers() headers: Record<string, string>, @Body() dto: { locale: "zh-Hant" | "zh-Hans" | "en" }) {
     const userId = this.optionalUserId(headers);
+    if (!["zh-Hant", "zh-Hans", "en"].includes(dto.locale)) throw new BadRequestException("Unsupported locale");
     if (!userId) return { ok: true, locale: dto.locale };
     return this.prisma.user.update({ where: { id: userId }, data: { preferred_locale: dto.locale }, select: { id: true, preferred_locale: true } });
+  }
+
+  @Post("user/preferred-style")
+  preferredStyle(@Headers() headers: Record<string, string>, @Body() dto: { style: "fashion" | "cozy" | "chinese" }) {
+    const userId = this.optionalUserId(headers);
+    if (!["fashion", "cozy", "chinese"].includes(dto.style)) throw new BadRequestException("Unsupported style");
+    if (!userId) return { ok: true, style: dto.style };
+    return this.prisma.user.update({ where: { id: userId }, data: { preferred_style: dto.style }, select: { id: true, preferred_style: true } });
   }
 
   @Get("web/home")
