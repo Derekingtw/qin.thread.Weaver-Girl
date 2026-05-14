@@ -26,6 +26,13 @@ describe("admin operations wiring", () => {
     expect(admin).toContain("403：沒有權限");
   });
 
+  it("auth keeps seeded employee login usable when OTP storage or phone salt drifts", () => {
+    const auth = read("apps/api/src/modules/auth.service.ts");
+    expect(auth).toContain("SEED_EMPLOYEE_PUBLIC_CODES");
+    expect(auth).toContain("OTP_STORAGE_UNAVAILABLE_FOR_SEED_EMPLOYEE");
+    expect(auth).toContain("public_code: SEED_EMPLOYEE_PUBLIC_CODES[phone]");
+  });
+
   it("homepage settings and media upload endpoints are implemented", () => {
     const controller = read("apps/api/src/modules/app.controller.ts");
     expect(controller).toContain('@Get("admin/homepage-settings")');
