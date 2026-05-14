@@ -99,3 +99,19 @@ See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
 Frontend language options: `繁 / 简 / EN`.
 
 Frontend style options: Fashion, Cozy, Chinese. Cozy is the default. The theme switcher is saved in localStorage and authenticated users can save it through `POST /user/preferred-style`.
+
+## Admin Console
+
+Admin Web:
+
+- https://qinshixian-admin-web-prod.onrender.com/
+
+Admin login uses employee phone + OTP. MVP OTP is `123456`.
+
+The admin frontend must receive:
+
+```text
+VITE_API_BASE_URL=https://qinshixian-api-prod.onrender.com
+```
+
+See [docs/ADMIN_GUIDE.md](docs/ADMIN_GUIDE.md) for role permissions, Hero image upload, media library, announcement management, product management, knitter review, ad review, and API health troubleshooting.

@@ -19,6 +19,23 @@ http://localhost:4000
 
 Development OTP is `123456`.
 
+## Health
+
+- `GET /health`
+
+Response:
+
+```json
+{
+  "status": "ok",
+  "service": "qinshixian-api",
+  "time": "2026-05-14T00:00:00.000Z",
+  "database": "ok",
+  "redis": "ok",
+  "storage": "MOCK"
+}
+```
+
 ## User
 
 - `POST /user/preferred-locale`
@@ -47,19 +64,53 @@ or:
 
 ## Admin
 
+- `GET /admin/dashboard`
 - `GET /admin/homepage-settings`
 - `PATCH /admin/homepage-settings`
+- `POST /admin/media/upload`
 - `GET /admin/announcements`
 - `POST /admin/announcements`
 - `PATCH /admin/announcements/:id`
+- `GET /admin/platform-products`
 - `POST /admin/platform-products`
+- `PATCH /admin/platform-products/:id`
 - `GET /admin/media-assets`
 - `POST /admin/media-assets`
+- `DELETE /admin/media-assets/:id`
 - `GET /admin/knitter-applications`
 - `POST /admin/knitter-applications/:id/approve`
 - `POST /admin/knitter-applications/:id/reject`
+- `GET /admin/listings`
+- `POST /admin/listings/:id/approve`
+- `POST /admin/listings/:id/reject`
+- `GET /admin/ad-packages`
+- `POST /admin/ad-packages`
+- `GET /admin/ad-applications`
+- `POST /admin/ad-applications/:id/approve`
+- `POST /admin/ad-applications/:id/reject`
+- `GET /admin/orders`
+- `GET /admin/support-tickets`
+- `GET /admin/settlements`
+- `GET /admin/refunds`
+- `GET /admin/users`
+- `GET /admin/employee-invites`
+- `POST /admin/employee-invites`
+- `GET /admin/audit-logs`
 
 Homepage settings write access is limited to `SUPER_ADMIN` and `MARKETING`. `CUSTOMER_SERVICE` can view selected admin data but cannot update homepage Hero image or settings.
+
+Admin APIs require:
+
+```http
+Authorization: Bearer <access-token>
+```
+
+`POST /admin/media/upload` uses `multipart/form-data`:
+
+- `file`: JPG, PNG, or WEBP
+- `usage`: `HOME_HERO`, `ANNOUNCEMENT`, `LISTING`, `AD`, `PLATFORM_PRODUCT`, `LOGO`, or `OTHER`
+
+Uploads are size-limited by `MEDIA_MAX_SIZE_MB` and write `media_assets`. When `OBJECT_STORAGE_PROVIDER=mock`, the API returns a warning and stores a data URL for MVP only; production must configure R2/S3/COS/OSS.
 
 ## 2026-05-14 Additions
 

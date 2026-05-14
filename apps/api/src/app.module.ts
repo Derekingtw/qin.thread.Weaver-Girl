@@ -5,6 +5,7 @@ import { AppController } from "./modules/app.controller";
 import { AuthService } from "./modules/auth.service";
 import { BusinessService } from "./modules/business.service";
 import { PaymentService } from "./modules/payment.service";
+import { ObjectStorageService } from "./modules/object-storage.provider";
 import { PrismaService } from "./common/prisma.service";
 import { RbacGuard } from "./common/rbac.guard";
 
@@ -17,6 +18,6 @@ import { RbacGuard } from "./common/rbac.guard";
     })
   ],
   controllers: [AppController],
-  providers: [PrismaService, AuthService, BusinessService, PaymentService, RbacGuard]
+  providers: [PrismaService, AuthService, BusinessService, PaymentService, ObjectStorageService, RbacGuard]
 })
 export class AppModule {}

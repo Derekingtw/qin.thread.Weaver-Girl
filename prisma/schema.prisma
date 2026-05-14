@@ -177,6 +177,15 @@ enum MediaUsage {
   OTHER
 }
 
+enum StorageProvider {
+  MOCK
+  LOCAL_DEV
+  S3
+  R2
+  COS
+  OSS
+}
+
 enum AdPackageStatus {
   ACTIVE
   DISABLED
@@ -989,9 +998,12 @@ model HomepageSetting {
   secondary_cta_text_en       String?
   secondary_cta_url           String
   hero_image_url              String?
+  hero_image_asset_id         String?
   hero_image_alt_zh_hant      String?
   hero_image_alt_zh_hans      String?
   hero_image_alt_en           String?
+  hero_image_position         String?  @default("center")
+  hero_image_mobile_position  String?  @default("center")
   show_hero_stat_card         Boolean  @default(false)
   hero_stat_label_zh_hant     String?
   hero_stat_label_zh_hans     String?
@@ -1057,9 +1069,14 @@ model MediaAsset {
   original_name String?
   mime_type     String?
   size_bytes    Int?
+  width         Int?
+  height        Int?
   usage         MediaUsage     @default(OTHER)
+  storage_provider StorageProvider @default(MOCK)
+  storage_key   String?
   created_by    String?
   created_at    DateTime       @default(now())
+  deleted_at    DateTime?
   creator       User?          @relation("MediaAssetCreatedBy", fields: [created_by], references: [id])
 
   @@map("media_assets")

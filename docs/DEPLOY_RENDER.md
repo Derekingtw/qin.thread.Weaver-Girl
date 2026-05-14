@@ -43,8 +43,31 @@ Set secrets in `qinshixian-prod-env`:
 - `MOCK_SMS_CODE`
 - `MOCK_PAYMENT_AUTO_PAID=false`
 - `OBJECT_STORAGE_PROVIDER`
+- `MEDIA_MAX_SIZE_MB`
+- `CORS_ORIGINS`
 
 `DATABASE_URL` must come from `qinshixian-postgres-prod`. `REDIS_URL` must come from `qinshixian-keyvalue-prod`.
+
+Admin Web must have:
+
+```text
+VITE_API_BASE_URL=https://qinshixian-api-prod.onrender.com
+```
+
+Web must have:
+
+```text
+NEXT_PUBLIC_API_BASE_URL=https://qinshixian-api-prod.onrender.com
+WEB_API_BASE_URL=https://qinshixian-api-prod.onrender.com
+```
+
+API CORS should include:
+
+```text
+CORS_ORIGINS=https://qinshixian-web-prod.onrender.com,https://qinshixian-admin-web-prod.onrender.com
+```
+
+API health check path is `/health`.
 
 ## Migrations And Seed
 
@@ -71,6 +94,16 @@ apps/web/public/brand/hero-qinshixian-yarn.png
 ```
 
 Production uploads must not rely on Render local filesystem. First version supports URL input and mock upload. Formal upload should connect S3, Cloudflare R2, Tencent COS, or Aliyun OSS through the `ObjectStorageProvider` interface.
+
+Storage environment keys:
+
+- `OBJECT_STORAGE_PROVIDER=mock | local-dev | s3 | r2 | cos | oss`
+- `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_PUBLIC_BASE_URL`
+- `R2_ACCOUNT_ID`, `R2_BUCKET`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_PUBLIC_BASE_URL`
+- `COS_BUCKET`, `COS_REGION`, `COS_SECRET_ID`, `COS_SECRET_KEY`, `COS_PUBLIC_BASE_URL`
+- `OSS_BUCKET`, `OSS_REGION`, `OSS_ACCESS_KEY_ID`, `OSS_ACCESS_KEY_SECRET`, `OSS_PUBLIC_BASE_URL`
+
+If production still uses `OBJECT_STORAGE_PROVIDER=mock`, the admin upload API shows a warning. Use URL input or configure object storage before storing real production images at scale.
 
 ## Domains
 

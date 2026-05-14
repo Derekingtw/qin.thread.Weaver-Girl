@@ -3,6 +3,34 @@ body {
   background: #FAF7F2;
   font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif;
 }
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #FAF7F2, #F2E8DD);
+}
+.login-card {
+  width: min(460px, 100%);
+  border-radius: 18px;
+  box-shadow: 0 24px 80px rgba(47, 52, 55, 0.12);
+}
+.login-logo {
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+.login-card h1 {
+  margin: 0 0 18px;
+  color: #2F3437;
+}
+.login-help {
+  color: #6F777C;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 16px 0 0;
+}
 .admin-shell { min-height: 100vh; background: #FAF7F2; }
 .sider { border-right: 1px solid #E9E2D8; }
 .admin-brand {
@@ -17,6 +45,7 @@ body {
 .admin-brand img {
   width: 158px;
   height: auto;
+  object-fit: contain;
 }
 .header {
   background: rgba(255, 255, 255, 0.86);
@@ -66,6 +95,27 @@ body {
   border-radius: 8px;
   border: 1px solid #E9E2D8;
   margin-bottom: 12px;
+}
+.hero-preview {
+  width: min(720px, 100%);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #E9E2D8;
+  margin: 8px 0 20px;
+}
+.asset-thumb {
+  width: 92px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #E9E2D8;
+  background: #FFF9F3;
+}
+.style-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 16px;
 }
 .theme-preview p { min-height: 48px; color: #6F777C; }
 @media (max-width: 900px) {

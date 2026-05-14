@@ -60,7 +60,7 @@ export class BusinessService {
       promoted_knitter_ads: promotedKnitterAds,
       hot_commission_listings: hotCommissionListings,
       platform_products: platformProducts,
-      process_steps: ["支付訂金", "平台協調", "驗收作品", "支付尾款", "平台出貨"],
+      process_steps: ["支付訂金", "秦時線協調", "驗收作品", "支付尾款", "秦時線出貨"],
       cooperation_modes: ["COMMISSION_5", "PLATFORM_BUYOUT_SERVICE", "PLATFORM_OWNED_INVENTORY"]
     };
   }

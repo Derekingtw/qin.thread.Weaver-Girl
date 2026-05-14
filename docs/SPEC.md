@@ -110,3 +110,30 @@ Homepage has exactly three knitter promotion slots. Ads must be paid with `payme
 ## Object Storage
 
 `media_assets` records image/video/file URLs and usage. First version supports fixed public assets, URL input, and mock upload. Production must use object storage rather than Render filesystem.
+
+## Admin Operations
+
+Admin Web is a real API client, not a static demo. It reads `VITE_API_BASE_URL`, checks `/health` on login, authenticates employees through phone OTP, stores a Bearer token, calls `GET /auth/me`, and shows 401 / 403 / API error states clearly.
+
+Core admin pages must provide loading, empty, and error states:
+
+- Dashboard
+- Homepage settings
+- Media assets
+- Announcements
+- Qin selection products
+- Knitter review
+- Listing review
+- Paid promotion review
+- Ad packages
+- Users
+- Orders
+- Support tickets
+- Settlements
+- Refunds
+- Employee invites
+- Audit logs
+
+Homepage settings supports Hero image URL, upload, media asset selection, alt text, object-position fields, multilingual slogan/CTA/trust points, stat card toggle, and three-style preview. Updates write `audit_logs`.
+
+Production image upload must use object storage. `OBJECT_STORAGE_PROVIDER=mock` is an MVP fallback that warns operators and must not be treated as final production storage.
