@@ -37,12 +37,19 @@ describe("frontend Qinshixian content", () => {
   it("language and theme switching support English and three themes", () => {
     const i18n = read("apps/web/lib/i18n.tsx");
     const themeToggle = read("apps/web/components/ThemeToggle.tsx");
+    const hero = read("apps/web/components/HomeHero.tsx");
     expect(i18n).toContain('"en"');
     expect(i18n).toContain('"fashion"');
     expect(i18n).toContain('"cozy"');
     expect(i18n).toContain('"chinese"');
     expect(i18n).toContain("qinshixian_style");
     expect(themeToggle).toContain("themeFashion");
+    expect(hero).toContain("hero-qinshixian-fashion.png");
+    expect(hero).toContain("hero-qinshixian-cozy.png");
+    expect(hero).toContain("hero-qinshixian-chinese.png");
+    expect(exists("apps/web/public/brand/hero-qinshixian-fashion.png")).toBe(true);
+    expect(exists("apps/web/public/brand/hero-qinshixian-cozy.png")).toBe(true);
+    expect(exists("apps/web/public/brand/hero-qinshixian-chinese.png")).toBe(true);
   });
 
   it("mobile layout has sticky CTA and snap rows", () => {
