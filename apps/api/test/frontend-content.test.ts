@@ -10,11 +10,23 @@ describe("frontend Qinshixian content", () => {
   it("uses the official logo asset in the shared Logo component", () => {
     const logo = read("apps/web/components/Logo.tsx");
     const css = read("apps/web/styles/theme.css");
+    const layout = read("apps/web/app/layout.tsx");
+    const manifest = read("apps/web/public/site.webmanifest");
     expect(exists("apps/web/public/brand/qinshixian-logo-main.png")).toBe(true);
     expect(exists("apps/web/public/brand/qinshixian-logo-main-light.png")).toBe(true);
     expect(exists("apps/web/public/brand/qinshixian-logo-main-dark.png")).toBe(true);
+    expect(exists("apps/web/public/favicon.ico")).toBe(true);
+    expect(exists("apps/web/public/favicon-16x16.png")).toBe(true);
+    expect(exists("apps/web/public/favicon-32x32.png")).toBe(true);
+    expect(exists("apps/web/public/apple-touch-icon.png")).toBe(true);
+    expect(exists("apps/web/public/android-chrome-192x192.png")).toBe(true);
+    expect(exists("apps/web/public/android-chrome-512x512.png")).toBe(true);
     expect(logo).toContain("/brand/qinshixian-logo-main.png");
     expect(logo).toContain("/brand/qinshixian-logo-main-dark.png");
+    expect(layout).toContain("/site.webmanifest");
+    expect(layout).toContain("/apple-touch-icon.png");
+    expect(manifest).toContain('"name": "秦時線"');
+    expect(manifest).toContain('"theme_color": "#3F766F"');
     expect(css).toContain("object-fit: contain");
   });
 
